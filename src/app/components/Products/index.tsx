@@ -151,6 +151,14 @@ export default function Products() {
           </div>
         ))}
       </div>
+
+      <div>
+        <div className="flex justify-center items-center mt-12">
+          <button className="px-16 py-2 border-2 border-[#b88e2f] text-[#b88e2f] font-bold hover:bg-[#b88e2f] hover:text-white transition">
+            Show More
+          </button>
+  </div>
+      </div>
     </div>
   );
 }
