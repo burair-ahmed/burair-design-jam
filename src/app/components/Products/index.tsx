@@ -100,7 +100,6 @@ export default function Products() {
                 {product.discount}
               </div>
 
-              {/* Overlay with buttons */}
               <div className="transform space-x-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
   <div className="grid grid-cols-12 items-center justify-center pt-[100px]">
     <div className="col-span-12 flex justify-center items-center">
@@ -123,10 +122,7 @@ export default function Products() {
 
   </div>
 </div>
-
-
-
-            </div>
+     </div>
 
             <div className="pl-4">
               <h2 className="mt-4 font-bold text-xl">{product.title}</h2>
