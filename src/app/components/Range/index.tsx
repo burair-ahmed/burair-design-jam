@@ -10,7 +10,7 @@ export default function Range() {
         <p className="text-center text-gray-700 text-base mt-2 md:text-lg">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit.
         </p>
-        <div className="grid grid-cols-12 gap-4 mt-8">
+        <div className="grid grid-cols-12 gap-2 mt-8">
           {/* First Image and Text */}
           <div className="col-span-12 md:col-span-4">
             <div className="w-[300px] h-[400px] mx-auto relative">
@@ -19,6 +19,7 @@ export default function Range() {
                 alt="Range 1"
                 layout="fill"
                 objectFit="cover"
+                className="rounded-[10px]"
               />
             </div>
             <h1 className="mt-4 text-center font-bold text-md md:text-2xl">
@@ -34,6 +35,7 @@ export default function Range() {
                 alt="Range 2"
                 layout="fill"
                 objectFit="cover"
+                className="rounded-[10px]"
               />
             </div>
             <h1 className="mt-4 text-center font-bold text-md md:text-2xl">
@@ -49,6 +51,7 @@ export default function Range() {
                 alt="Range 3"
                 layout="fill"
                 objectFit="cover"
+                className="rounded-[10px]"
               />
             </div>
             <h1 className="mt-4 text-center font-bold text-md md:text-2xl">
