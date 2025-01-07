@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function FuniroFurniture() {
     return (
-        <div className="mt-16">
+        <div className="mt-16 mb-16">
 
 <div className="grid grid-cols-12">
   <div className="col-span-12 mx-auto">
@@ -15,7 +15,7 @@ export default function FuniroFurniture() {
   </div>
 
 </div>
-<div className="grid grid-cols-12">
+<div className="grid grid-cols-12 md:-mt-[50px]">
 <div className="col-span-12">
   <Image
     src="/masonry.png"
