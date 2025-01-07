@@ -78,7 +78,7 @@ const productlist = [
 
 export default function Products() {
   return (
-    <div>
+    <div className="mb-12">
       <div>
         <h1 className="mt-10 text-center font-bold text-lg md:text-4xl">
           Our Products

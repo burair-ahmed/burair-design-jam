@@ -8,13 +8,11 @@ body {
 }
 
 
-
-/* styles/BeautifulRoomsSection.css */
 .beautiful-rooms {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #fdf7f2; /* Match the beige color */
+  background-color: #fdf7f2;
   padding: 2rem;
 }
 
@@ -25,7 +23,7 @@ body {
 .beautiful-rooms h2 {
   font-size: 2rem;
   font-weight: bold;
-  color: #333; /* Adjust color for readability */
+  color: #333; 
 }
 
 .beautiful-rooms p {
@@ -35,7 +33,7 @@ body {
 }
 
 .beautiful-rooms .explore-button {
-  background-color: #c5a77b; /* Button color */
+  background-color: #c5a77b;
   color: #fff;
   border: none;
   padding: 0.8rem 1.5rem;
@@ -47,7 +45,7 @@ body {
 }
 
 .beautiful-rooms .explore-button:hover {
-  background-color: #a98b6b; /* Hover color */
+  background-color: #a98b6b; 
 }
 
 .beautiful-rooms .carousel {
@@ -90,3 +88,9 @@ body {
   color: #333;
   margin: 0.5rem 0 0;
 }
+
+/* @media screen and (max-width: 768px) {
+  .slider-dots {
+    margin-top: 32px !important;
+  }
+} */
