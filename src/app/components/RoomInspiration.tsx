@@ -19,20 +19,6 @@ const RoomInspiration: React.FC<RoomInspirationProps> = ({
 }) => {
   const [currentSlide, setCurrentSlide] = useState<number>(0);
 
-  const rooms: Room[] = [
-    {
-      id: "01",
-      type: "Bed Room",
-      title: "Inner Peace",
-      image: "/room1.png",
-    },
-    {
-      id: "02",
-      type: "Bed Room",
-      title: "Asdasd",
-      image: "/room1.png",
-    },
-  ];
 
   return (
     <div className={`grid mx-auto px-4 py-8 bg-[#FCF8F3] ${className}`}>
