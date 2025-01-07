@@ -3,6 +3,7 @@ import Hero from "./components/Hero";
 import Range from "./components/Range";
 import Products from "./components/Products";
 import RoomInspiration from './components/RoomInspiration';
+import FuniroFurniture from "./components/FuniroFurniture";
 
 export default function Home() {
   return (
@@ -12,7 +13,7 @@ export default function Home() {
     <Range/>
     <Products/>
     <RoomInspiration />
-
+    <FuniroFurniture/>
    </div>
   );
 }

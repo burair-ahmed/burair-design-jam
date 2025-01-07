@@ -3,7 +3,7 @@ import Image from "next/image";
 export default function Range() {
   return (
     <div>
-      <div className="">
+      <div className="mb-4">
         <h1 className="mt-10 text-center font-bold text-lg md:text-2xl">
           Browse The Range
         </h1>
