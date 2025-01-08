@@ -219,19 +219,53 @@ export default function ProductDetails() {
           </div>
         </div>
       </div>
-
-      <div className="grid grid-col-12">
-        <div className="col-span-12">
-            
+<hr className="mb-4"/>
+      <div className="grid grid-col-12 space-y-4 px-4">
+        <div className="md:col-span-4 col-span-12">
+            <h1 className="text-black text-2xl font-medium">Description</h1>
+            <p className="text-[#9F9F9F] mt-4 md:hiddden">Embodying the raw, wayward spirit of rock n roll, the Kilburn portable active stereo speaker takes the unmistakable look and sound of Marshall, unplugs the chords, and takes the show on the road.</p>
+        <p className="text-[#9F9F9F] mt-4 md:hiddden">Weighing in under 7 pounds, the Kilburn is a lightweight piece of vintage styled engineering. Setting the bar as one of the loudest speakers in its class, the Kilburn is a compact, stout-hearted hero with a well-balanced audio which boasts a clear midrange and extended highs for a sound that is both articulate and pronounced. The analogue knobs allow you to fine tune the controls to your personal preferences while the guitar-influenced leather strap enables easy and stylish travel.</p>
+        
+        </div>
+        <div className="md:col-span-4 col-span-12">
+        <h1 className="text-[#9F9F9F] text-2xl font-medium">Additional Information</h1>
+        </div>
+        <div className="md:col-span-4 col-span-12">
+        <h1 className="text-[#9F9F9F] text-2xl font-medium">Reviews[5]</h1>
         </div>
       </div>
-
+      <p className="text-[#9F9F9F] mt-4 hidden md:block">Embodying the raw, wayward spirit of rock n roll, the Kilburn portable active stereo speaker takes the unmistakable look and sound of Marshall, unplugs the chords, and takes the show on the road.</p>
+        <p className="text-[#9F9F9F] mt-4 hidden md:block">Weighing in under 7 pounds, the Kilburn is a lightweight piece of vintage styled engineering. Setting the bar as one of the loudest speakers in its class, the Kilburn is a compact, stout-hearted hero with a well-balanced audio which boasts a clear midrange and extended highs for a sound that is both articulate and pronounced. The analogue knobs allow you to fine tune the controls to your personal preferences while the guitar-influenced leather strap enables easy and stylish travel.</p>
+        
+        <div className="grid grid-cols-12 space-y-4 md:space-y-0 mb-4">
+            <div className="md:col-span-6 col-span-12 inline-flex items-center justify-center">
+                <div className="md:w-[605px] md:h-[348px] w-[363px] bg-[#F9F1E7] rounded-[10px] ">
+                <Image 
+                src={"/detail6.png"}
+                alt="Detail 6"
+                width={828}
+                height={551}
+                />
+                </div>
+            </div>
+            <div className="md:col-span-6 col-span-12 inline-flex items-center justify-center">
+            <div className="md:w-[605px] md:h-[348px] w-[363px] bg-[#F9F1E7] rounded-[10px] inline-flex items-center">
+                <Image 
+                src={"/detail7.png"}
+                alt="Detail 7"
+                width={657}
+                height={436}
+                />
+                </div>
+            </div>
+        </div>
       {/*  */}
-      {/* <div className="grid grid-cols-12 gap-4 mt-8 px-16">
+      
+      <div className="grid grid-cols-12 gap-4 mt-8 md:px-16">
                 {productlist.map((product) => (
            <div
            key={product.id}
-           className="bg-[#f4f5f7] col-span-12 md:col-span-3 group relative hover:bg-black hover:bg-opacity-[50%] transition duration-300 ease-in-out"
+           className="items-center bg-[#f4f5f7] col-span-6 md:col-span-3 group relative hover:bg-black hover:bg-opacity-[50%] transition duration-300 ease-in-out"
          >
            <div className="w-full h-[300px] mx-auto relative">
              <Image
@@ -290,7 +324,14 @@ export default function ProductDetails() {
          </div>
          
                 ))}
-              </div> */}
+              </div>
+              <div className="mb-6">
+        <div className="flex justify-center items-center mt-12">
+          <button className="px-16 py-2 border-2 border-[#b88e2f] text-[#b88e2f] font-bold hover:bg-[#b88e2f] hover:text-white transition">
+            Show More
+          </button>
+        </div>
+      </div>
       <Footer />
     </div>
   );
