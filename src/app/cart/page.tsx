@@ -3,10 +3,12 @@ import BeforeFooter from "../components/BeforeFooter";
 import Footer from "../components/Footer";
 import PageHero from "../components/Page-Hero";
 import { FaTrash} from "react-icons/fa";
+import Header from "../components/Header";
 
 export default function Cart() {
     return (
         <div>
+            <Header/>
             <PageHero title="Cart" />
 
             <div className="grid grid-cols-12 w-[90%] gap-x-12 mt-16 mx-auto md:w-[95%]">
