@@ -1,11 +1,11 @@
 "use client";
 
-interface Room {
-  id: string;
-  type: string;
-  title: string;
-  image: string;
-}
+// interface Room {
+//   id: string;
+//   type: string;
+//   title: string;
+//   image: string;
+// }
 
 import React, { useState } from "react";
 import { ChevronRight } from "lucide-react";
