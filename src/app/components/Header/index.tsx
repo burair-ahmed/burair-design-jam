@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { FaSearch, FaHeart, FaShoppingCart, FaBars, FaTimes } from "react-icons/fa";
 
 export default function Header() {
@@ -38,49 +39,49 @@ export default function Header() {
             isMobileMenuOpen ? "block" : "hidden"
           } col-span-12 md:col-span-4 md:flex md:justify-center md:space-x-6 absolute md:static bg-white w-full left-0 top-[70px] md:top-0 z-10 md:w-auto`}
         >
-          <a
+          <Link
             href="/"
             className="block py-2 px-4 text-lg font-medium hover:text-gray-700 md:inline"
           >
             Home
-          </a>
-          <a
+          </Link>
+          <Link
             href="/shop"
             className="block py-2 px-4 text-lg font-medium hover:text-gray-700 md:inline"
           >
             Shop
-          </a>
-          <a
+          </Link>
+          <Link
             href="/blog"
             className="block py-2 px-4 text-lg font-medium hover:text-gray-700 md:inline"
           >
             Blog
-          </a>
-          <a
+          </Link>
+          <Link
             href="/productdetails"
             className="block py-2 px-4 text-lg font-medium hover:text-gray-700 md:inline"
           >
             Product Details
-          </a>
-          <a
+          </Link>
+          <Link
             href="/contact"
             className="block py-2 px-4 text-lg font-medium hover:text-gray-700 md:inline"
           >
             Contact
-          </a>
+          </Link>
         </div>
 
         {/* Right Column - Icons */}
         <div className="col-span-4 hidden md:flex justify-end space-x-6 text-xl">
-          <a href="#" className="hover:text-gray-700">
+          <Link href="#" className="hover:text-gray-700">
             <FaSearch />
-          </a>
-          <a href="#" className="hover:text-gray-700">
+          </Link>
+          <Link href="#" className="hover:text-gray-700">
             <FaHeart />
-          </a>
-          <a href="#" className="hover:text-gray-700">
+          </Link>
+          <Link href="#" className="hover:text-gray-700">
             <FaShoppingCart />
-          </a>
+          </Link>
         </div>
       </div>
     </header>
