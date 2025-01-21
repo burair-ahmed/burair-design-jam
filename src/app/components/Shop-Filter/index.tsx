@@ -64,7 +64,7 @@ export default function ShopFilter() {
             </div>
             <div className="col-span-6 md:col-span-6">
               <div className="grid grid-cols-12">
-                <div className="col-span-5 md:col-span-3 items-center">
+                <div className="col-span-5 md:col-span-4 items-center">
                   <h1 className="text-[20px]">Sort By</h1>
                 </div>
                 <div className="col-span-2 flex ">

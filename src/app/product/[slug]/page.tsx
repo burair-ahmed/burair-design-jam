@@ -15,6 +15,7 @@ import {
 } from "react-icons/fa";
 import Link from "next/link";
 
+
 type Product = {
   _id: string;
   title: string;
