@@ -13,6 +13,7 @@ import {
   FaTwitter,
   FaLinkedin,
 } from "react-icons/fa";
+import Link from "next/link";
 
 type Product = {
   _id: string;
@@ -88,9 +89,9 @@ export default function ProductDetails({ params }: { params: Promise<{ slug: str
       <div>
 <div className="bg-[#F9F1E7] grid grid-cols-12 py-8 px-8">
         <div className="col-span-12 space-x-2">
-          <span className="text-[#9F9F9F] font-medium">Home</span>{" "}
+          <span className="text-[#9F9F9F] font-medium"><Link href={"/"}>Home</Link></span>{" "}
           <span className="font-bold text-lg">&gt;</span>{" "}
-          <span className="text-[#9F9F9F] font-medium">Shop</span>{" "}
+          <span className="text-[#9F9F9F] font-medium"><Link href={"/shop"}>Shop</Link></span>{" "}
           <span className="font-bold text-lg">&gt;</span>{" "}
           <span className="font-extrabold text-2xl text-[#9F9F9F]">|</span>{" "}
           <span className="font-semibold text-sm">{item.title}</span>
