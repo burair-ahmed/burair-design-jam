@@ -60,7 +60,7 @@ export default function ProductDetails() {
       {/* <PageHero title="Product Details"/> */}
 
       <div className="grid grid-cols-12 py-12">
-        <div className="md:col-span-6 col-span-6">
+        <div className="md:col-span-6 col-span-6 md:mx-auto md:px-8">
           <div className="grid grid-cols-12 gap-6 px-2 items-center">
             <div className="col-span-4">
               <div className="flex-row space-y-4">
@@ -166,7 +166,7 @@ export default function ProductDetails() {
               {/* end of color */}
               {/* start of add to carts and other buttons */}
 
-              <div className="grid grid-cols-12 inline-flex items-center">
+              <div className="grid grid-cols-12 inline-flex items-center" >
               
                 
                 <div className="col-span-4 inline-flex items-center mt-4">
