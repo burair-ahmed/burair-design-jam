@@ -1,6 +1,20 @@
 import Image from "next/image";
 
-export default function ShopFilter() {
+interface shopFilterProps {
+  NoOfItems: string;
+  currentPage: number;
+  productsPerPage: number;
+  productsPerPageOptions: number[];
+  handleProductsPerPageChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+}
+
+export default function ShopFilter({NoOfItems, currentPage, productsPerPage, productsPerPageOptions, handleProductsPerPageChange,} : shopFilterProps) {
+
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const startProduct = indexOfFirstProduct + 1;
+  const endProduct = Math.min(indexOfLastProduct, parseInt(NoOfItems));
+
   return (
     <div className="bg-[#F9F1E7] py-8">
       <div className="grid grid-cols-10 w-[90%] gap-2 mx-auto flex items-center justify-center">
@@ -41,7 +55,7 @@ export default function ShopFilter() {
           </div>
         </div>
         <div className="col-span-10 md:col-span-2 md:border-l-2 md:border-[#9F9F9F] flex justify-center items-center pl-6">
-          <h1 className="text-[16px]">Showing 1–16 of 32 results</h1>
+          <h1 className="text-[16px]">Showing {startProduct}–{endProduct} of {NoOfItems} results</h1>
         </div>
         <div className="col-span-4"></div>
 
@@ -53,12 +67,19 @@ export default function ShopFilter() {
                   <h1 className="text-[20px]">Show</h1>
                 </div>
                 <div className="col-span-8 flex ">
-                  <select name="" id="" className="text-md custom-select">
-                    <option value="08">08</option>
-                    <option value="16">16</option>
-                    <option value="24">24</option>
-                    <option value="32">32</option>
-                  </select>
+                <select
+  name="productsPerPage"
+  id="productsPerPage"
+  className="text-md custom-select"
+  value={productsPerPage}
+  onChange={(e) => handleProductsPerPageChange(e)} // Trigger parent handler
+>
+  {productsPerPageOptions.map((option) => (
+    <option key={option} value={option}>
+      {option}
+    </option>
+  ))}
+</select>
                 </div>
               </div>
             </div>
