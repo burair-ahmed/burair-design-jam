@@ -144,7 +144,7 @@ async function getProducts(): Promise<Product[]> {
 }
 
 
-export default function Shop({ params }: { params: Promise<{ slug: string }> }) {
+export default function Shop() {
 
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [productsPerPage, setProductsPerPage] = useState<number>(8);

@@ -66,7 +66,7 @@ async function getProducts(limit: number): Promise<Product[]> {
 
 
 
-export default function Products({ params }: { params: Promise<{ slug: string }> }) {
+export default function Products() {
 
   const [displayedProduct, setDisplayedProduct] = useState<Product[]>([]);
   // const [slug, setSlug] = useState<string | null>(null);
