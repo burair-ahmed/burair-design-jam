@@ -7,10 +7,8 @@ import { client } from "../../../sanity/lib/client";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle,
 } from "@/components/ui/card"
 import { useState, useEffect } from "react";
 
@@ -71,15 +69,9 @@ async function getProducts(limit: number): Promise<Product[]> {
 export default function Products({ params }: { params: Promise<{ slug: string }> }) {
 
   const [displayedProduct, setDisplayedProduct] = useState<Product[]>([]);
-  const [slug, setSlug] = useState<string | null>(null);
+  // const [slug, setSlug] = useState<string | null>(null);
   const productLimit = 8; 
-  useEffect(() => {
-    async function unwrapParams() {
-      const resolvedParams = await params;
-      setSlug(resolvedParams.slug);
-    }
-    unwrapParams();
-  }, [params]);
+  
 
   useEffect(() => {
     getProducts(productLimit).then((products) => setDisplayedProduct(products));

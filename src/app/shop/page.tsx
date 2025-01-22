@@ -9,15 +9,13 @@ import BeforeFooter from "../components/BeforeFooter";
 import Footer from "../components/Footer";
 import { client } from "../../sanity/lib/client";
 import { useState, useEffect } from "react";
-import { product } from "@/sanity/schemaTypes/product";
+// import { product } from "@/sanity/schemaTypes/product";
 import Link from "next/link";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle,
 } from "@/components/ui/card"
 
 
@@ -152,7 +150,7 @@ export default function Shop({ params }: { params: Promise<{ slug: string }> }) 
   const [productsPerPage, setProductsPerPage] = useState<number>(8);
 
 const [displayedProduct, setDisplayedProduct] = useState<Product[]>([]);
-const [slug, setSlug] = useState<string | null>(null);
+// const [slug, setSlug] = useState<string | null>(null);
 const totalPages = Math.ceil(displayedProduct.length / productsPerPage);
 
 
@@ -163,20 +161,13 @@ const productsPerPageOptions = [8, 12, 16, 20]
 
 const handleProductsPerPageChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
   setProductsPerPage(parseInt(event.target.value));
-  setCurrentPage(1); // Reset to page 1 when products per page changes
+  setCurrentPage(1);
 };
   
 const handlePageChange = (page: number) => {
   setCurrentPage(page);
 };
 
-    useEffect(() => {
-      async function unwrapParams() {
-        const resolvedParams = await params;
-        setSlug(resolvedParams.slug);
-      }
-      unwrapParams();
-    }, [params]);
   
     useEffect(() => {
       getProducts().then((products) => setDisplayedProduct(products));
@@ -239,15 +230,19 @@ className={`absolute top-4 right-4 text-white text-xs px-3 py-3 rounded-full w-[
             <div className="flex justify-center items-center mt-4 space-x-4">
               <div className="flex flex-col items-center">
                 <p className="font-bold text-lg">
-                  <span>${product.price}</span>
+                <span>
+ ${product.discountPercentage 
+    ? `${product.price - (product.price * product.discountPercentage) / 100}` 
+    : `${product.price}`} 
+</span>
+
                 </p>
               </div>
 
               <div className="flex flex-col items-center">
                 <p className="font-bold text-[12px]">
-                  <span className="line-through text-gray-500">
-                    {product.price}
-                  </span>
+                  <span className={`line-through text-gray-500 ${
+                    !product.discountPercentage ? "hidden" : ""}`}>{product.price}</span>
                 </p>
               </div>
             </div>

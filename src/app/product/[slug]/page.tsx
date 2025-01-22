@@ -6,9 +6,6 @@ import Header from "../../components/Header";
 import { client } from "../../../sanity/lib/client";
 import Image from "next/image";
 import {
-  FaShareAlt,
-  FaRegHeart,
-  FaRegClone,
   FaFacebook,
   FaTwitter,
   FaLinkedin,

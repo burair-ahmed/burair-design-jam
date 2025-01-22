@@ -72,7 +72,7 @@ export default function ShopFilter({NoOfItems, currentPage, productsPerPage, pro
   id="productsPerPage"
   className="text-md custom-select"
   value={productsPerPage}
-  onChange={(e) => handleProductsPerPageChange(e)} // Trigger parent handler
+  onChange={(e) => handleProductsPerPageChange(e)}
 >
   {productsPerPageOptions.map((option) => (
     <option key={option} value={option}>
