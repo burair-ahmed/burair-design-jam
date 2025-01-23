@@ -4,6 +4,13 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { FaSearch, FaHeart, FaShoppingCart, FaBars, FaTimes } from "react-icons/fa";
+import {
+  SignInButton,
+  SignedIn,
+  SignedOut,
+  UserButton
+} from '@clerk/nextjs'
+import BeforeFooter from "../BeforeFooter";
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -12,6 +19,14 @@ export default function Header() {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
+
+  const DotIcon = () => {
+    return (
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor">
+        <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512z" />
+      </svg>
+    )
+  }
   return (
     <header className="bg-white shadow-md">
       <div className="grid grid-cols-12 items-center p-4">
@@ -74,7 +89,7 @@ export default function Header() {
         {/* Right Column - Icons */}
         <div className="col-span-4 hidden md:flex justify-end space-x-6 text-xl">
           <Link href="#" className="hover:text-gray-700">
-            <FaSearch />
+            <FaSearch className="size-5"/>
           </Link>
           <Link href="#" className="hover:text-gray-700">
             <FaHeart />
@@ -82,6 +97,30 @@ export default function Header() {
           <Link href="#" className="hover:text-gray-700">
             <FaShoppingCart />
           </Link>
+         
+          <SignedOut>
+            <SignInButton mode="modal"/>
+          </SignedOut>
+          <SignedIn>
+          <UserButton>
+        <UserButton.MenuItems>
+          <UserButton.Action label="Help" labelIcon={<DotIcon />} open="help" />
+          <UserButton.Action label="Good" labelIcon={<DotIcon />} open="good" />
+        </UserButton.MenuItems>
+
+        <UserButton.UserProfilePage label="Help" labelIcon={<DotIcon />} url="help">
+          <div>
+            <BeforeFooter/>
+          </div>
+        </UserButton.UserProfilePage>
+        <UserButton.UserProfilePage label="Good" labelIcon={<DotIcon />} url="good">
+          <div>
+            <BeforeFooter/>
+          </div>
+        </UserButton.UserProfilePage>
+      </UserButton>
+          </SignedIn>
+         
         </div>
       </div>
     </header>
