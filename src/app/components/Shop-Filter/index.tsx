@@ -6,9 +6,10 @@ interface shopFilterProps {
   productsPerPage: number;
   productsPerPageOptions: number[];
   handleProductsPerPageChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+  onLayoutChange: (layoutMode: "grid" | "row") => void;
 }
 
-export default function ShopFilter({NoOfItems, currentPage, productsPerPage, productsPerPageOptions, handleProductsPerPageChange,} : shopFilterProps) {
+export default function ShopFilter({NoOfItems, currentPage, productsPerPage, productsPerPageOptions, handleProductsPerPageChange, onLayoutChange} : shopFilterProps) {
 
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
@@ -37,19 +38,23 @@ export default function ShopFilter({NoOfItems, currentPage, productsPerPage, pro
             </div>
 
             <div className="col-span-4 flex justify-center items-center">
-              <Image
-                src={"/filtericon2.png"}
-                alt="Filter Icon"
+            <Image
+                src="/filtericon2.png"
+                alt="Grid View"
                 width={20}
                 height={20}
+                className="cursor-pointer"
+                onClick={() => onLayoutChange("grid")}
               />
             </div>
             <div className="col-span-2 flex justify-center items-center">
-              <Image
-                src={"/filtericon3.png"}
-                alt="Filter Icon"
+            <Image
+                src="/filtericon3.png"
+                alt="Row View"
                 width={20}
                 height={20}
+                className="cursor-pointer"
+                onClick={() => onLayoutChange("row")}
               />
             </div>
           </div>
