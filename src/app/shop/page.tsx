@@ -211,20 +211,21 @@ export default function Shop() {
                           layout="fill"
                           objectFit="cover"
                           className="group-hover:opacity-70 transition duration-300 rounded-tl-lg rounded-tr-lg"
-                        />
+                          />
 
                         <div
                           className={`absolute top-4 right-4 text-white text-xs px-3 py-3 rounded-full w-[40px] h-[40px] flex items-center justify-center ${
                             product.discountPercentage &&
                             product.discountPercentage > 0
-                              ? "bg-[#2ec1ac]"
-                              : "bg-red-500"
+                            ? "bg-[#2ec1ac]"
+                            : "bg-red-500"
                           }`}
-                        >
+                          >
                           {product.discountPercentage
                             ? `${product.discountPercentage}%`
                             : "0%"}
                         </div>
+                            <div className={`${product.isNew? "absolute top-4 left-4 text-white text-xs px-3 py-3 rounded-full w-[40px] h-[40px] flex items-center justify-center bg-[#2ec1ac]" : ""}`}>{product.isNew? "New" : ""}</div>
                       </div>
                     </CardHeader>
 
@@ -313,6 +314,20 @@ export default function Shop() {
                     objectFit="cover"
                     className="rounded-lg group-hover:opacity-70 transition"
                   />
+                  <div
+                          className={`absolute top-4 right-4 text-white text-xs px-3 py-3 rounded-full w-[40px] h-[40px] flex items-center justify-center ${
+                            product.discountPercentage &&
+                            product.discountPercentage > 0
+                              ? "bg-[#2ec1ac]"
+                              : "bg-red-500"
+                          }`}
+                        >
+                          {product.discountPercentage
+                            ? `${product.discountPercentage}%`
+                            : "0%"}
+                        </div>
+                        <div className={`${product.isNew? "absolute top-4 left-4 text-white text-xs px-3 py-3 rounded-full w-[40px] h-[40px] flex items-center justify-center bg-[#2ec1ac]" : ""}`}>{product.isNew? "New" : ""}</div>
+
                 </div>
                 <div className="flex-1 pl-4">
                   <h2 className="font-bold text-xl">{product.title}</h2>
