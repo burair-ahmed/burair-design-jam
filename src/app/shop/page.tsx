@@ -187,10 +187,11 @@ export default function Shop() {
         productsPerPageOptions={productsPerPageOptions}
         handleProductsPerPageChange={handleProductsPerPageChange}
         onLayoutChange={handleLayoutChange}
+        
       />
 
       {layoutMode === "grid" ? (
-        <div>
+        <div className="mt-8">
           <div className="grid grid-cols-12 gap-4 mt-8 px-16">
             {currentProducts.map((product) => (
               <div
@@ -292,7 +293,7 @@ export default function Shop() {
           </div>
         </div>
       ) : (
-        <div>
+        <div className="mt-8 mx-8">
           {" "}
           {currentProducts.map((product) => (
             <div
