@@ -95,23 +95,27 @@ export default function Products() {
               <Card className="py-0 group-hover:bg-black group-hover:bg-opacity-[50%] transition duration-300 ease-in-out">
                 <CardHeader className="p-0">
                   <div className="w-full h-[300px] mx-auto relative">
-                    <Image
-                      src={product.productImage?.asset?.url}
-                      alt={product.title}
-                      layout="fill"
-                      objectFit="cover"
-                      className="group-hover:opacity-70 transition duration-300 rounded-tl-lg rounded-tr-lg"
-                    />
-
-                    <div
-                      className={`absolute top-4 right-4 text-white text-xs px-3 py-3 rounded-full w-[40px] h-[40px] flex items-center justify-center ${
-                        product.discountPercentage && product.discountPercentage > 0
-                          ? "bg-[#2ec1ac]"
-                          : "bg-red-500"
-                      }`}
-                    >
-                      {product.discountPercentage ? `${product.discountPercentage}%` : "0%"}
-                    </div>
+                      <Image
+                                        src={product.productImage.asset.url}
+                                        alt={product.title}
+                                        layout="fill"
+                                        objectFit="cover"
+                                        className="rounded-lg group-hover:opacity-70 transition"
+                                      />
+                                      <div
+                                              className={`absolute top-4 right-4 text-white text-xs px-3 py-3 rounded-full w-[40px] h-[40px] flex items-center justify-center ${
+                                                product.discountPercentage &&
+                                                product.discountPercentage > 0
+                                                  ? "bg-[#E97171]"
+                                                  : ""
+                                              }`}
+                                            >
+                                              {product.discountPercentage
+                                                ? `-${product.discountPercentage}%`
+                                                : ""}
+                                            </div>
+                                            <div className={`${product.isNew? "absolute top-4 left-4 text-white text-xs px-3 py-3 rounded-full w-[40px] h-[40px] flex items-center justify-center bg-[#2ec1ac]" : ""}`}>{product.isNew? "New" : ""}</div>
+                    
 
                   </div>
                 </CardHeader>
