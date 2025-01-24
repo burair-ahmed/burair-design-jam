@@ -156,7 +156,8 @@ export default function Shop() {
     indexOfFirstProduct,
     indexOfLastProduct
   );
-  const productsPerPageOptions = [8, 12, 16, 20];
+  const all = displayedProduct.length
+  const productsPerPageOptions = [8, 12, 16, 20, all];
 
   const handleProductsPerPageChange = (
     event: React.ChangeEvent<HTMLSelectElement>
