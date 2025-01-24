@@ -1,16 +1,12 @@
-'use client'
+"use client";
 
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { FaSearch, FaHeart, FaShoppingCart, FaBars, FaTimes } from "react-icons/fa";
-import {
-  SignInButton,
-  SignedIn,
-  SignedOut,
-  UserButton
-} from '@clerk/nextjs'
+import { FaBars, FaTimes } from "react-icons/fa";
+import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import BeforeFooter from "../BeforeFooter";
+import { useRouter } from "next/navigation";
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -18,15 +14,18 @@ export default function Header() {
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
-
-
+  const router = useRouter();
   const DotIcon = () => {
     return (
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 512 512"
+        fill="currentColor"
+      >
         <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512z" />
       </svg>
-    )
-  }
+    );
+  };
   return (
     <header className="bg-white shadow-md">
       <div className="grid grid-cols-12 items-center p-4">
@@ -87,40 +86,82 @@ export default function Header() {
         </div>
 
         {/* Right Column - Icons */}
-        <div className="col-span-4 hidden md:flex justify-end space-x-6 text-xl">
-          <Link href="#" className="hover:text-gray-700">
-            <FaSearch className="size-5"/>
-          </Link>
-          <Link href="#" className="hover:text-gray-700">
-            <FaHeart />
-          </Link>
-          <Link href="#" className="hover:text-gray-700">
-            <FaShoppingCart />
-          </Link>
-         
+        <div className="col-span-4 hidden md:flex justify-end space-x-6 text-xl items-center">
           <SignedOut>
-            <SignInButton mode="modal"/>
+            <SignInButton mode="modal">
+              <Link href="#" className="hover:text-gray-700">
+                <Image
+                  src={"/header-icon1.png"}
+                  alt="Search"
+                  width={22}
+                  height={22}
+                />
+              </Link>
+            </SignInButton>
           </SignedOut>
           <SignedIn>
-          <UserButton>
-        <UserButton.MenuItems>
-          <UserButton.Action label="Help" labelIcon={<DotIcon />} open="help" />
-          <UserButton.Action label="Good" labelIcon={<DotIcon />} open="good" />
-        </UserButton.MenuItems>
-
-        <UserButton.UserProfilePage label="Help" labelIcon={<DotIcon />} url="help">
-          <div>
-            <BeforeFooter/>
-          </div>
-        </UserButton.UserProfilePage>
-        <UserButton.UserProfilePage label="Good" labelIcon={<DotIcon />} url="good">
-          <div>
-            <BeforeFooter/>
-          </div>
-        </UserButton.UserProfilePage>
-      </UserButton>
+            <UserButton>
+              <UserButton.MenuItems>
+              <UserButton.Action
+            label="Manage Account"
+            labelIcon={<DotIcon />}
+            onClick={() => router.push("/manage-account")} // Navigate to /manage-account
+          />
+                <UserButton.Action
+                  label="Help"
+                  labelIcon={<DotIcon />}
+                  open="help"
+                />
+                <UserButton.Action
+                  label="Good"
+                  labelIcon={<DotIcon />}
+                  open="good"
+                />
+              </UserButton.MenuItems>
+              <UserButton.UserProfilePage
+                label="Help"
+                labelIcon={<DotIcon />}
+                url="help"
+              >
+                <div>
+                  <BeforeFooter />
+                </div>
+              </UserButton.UserProfilePage>
+              <UserButton.UserProfilePage
+                label="Good"
+                labelIcon={<DotIcon />}
+                url="good"
+              >
+                <div>
+                  <BeforeFooter />
+                </div>
+              </UserButton.UserProfilePage>
+            </UserButton>
           </SignedIn>
-         
+          <Link href="#" className="hover:text-gray-700">
+            <Image
+              src={"/header-icon2.png"}
+              alt="Search"
+              width={20}
+              height={22}
+            />
+          </Link>
+          <Link href="#" className="hover:text-gray-700">
+            <Image
+              src={"/header-icon3.png"}
+              alt="Wishlist"
+              width={20}
+              height={22}
+            />
+          </Link>
+          <Link href="#" className="hover:text-gray-700">
+            <Image
+              src={"/header-icon4.png"}
+              alt="Cart"
+              width={20}
+              height={22}
+            />
+          </Link>
         </div>
       </div>
     </header>
