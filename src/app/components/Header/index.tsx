@@ -100,13 +100,8 @@ export default function Header() {
             </SignInButton>
           </SignedOut>
           <SignedIn>
-            <UserButton>
+            <UserButton userProfileUrl="/user-profile">
               <UserButton.MenuItems>
-              <UserButton.Action
-            label="Manage Account"
-            labelIcon={<DotIcon />}
-            onClick={() => router.push("/manage-account")} // Navigate to /manage-account
-          />
                 <UserButton.Action
                   label="Help"
                   labelIcon={<DotIcon />}
