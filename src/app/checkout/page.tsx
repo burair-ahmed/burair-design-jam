@@ -36,37 +36,44 @@ export default function Checkout() {
     }));
   };
 
+const totalPricewithTax = (totalPrice * 0.1) + totalPrice;
   const handlePlaceOrder = async () => {
-    // Get cart items from use-shopping-cart
+    // Map cart items to the required format
     const cartItems = Object.values(cartDetails ?? {}).map((item: any) => ({
-      _type: 'reference',
-      _ref: item.id,  // Assuming 'id' corresponds to the Sanity product's document ID
-      _key: item.id,  
-    }));
-
+        _key: `${item.id}-${item.quantity}`, // Unique key
+        _type: 'cartItem',
+        product: {
+          _type: 'reference',
+          _ref: item.id, // Product reference
+        },
+        quantity: item.quantity, // Quantity
+      }));
+      
+  
     const orderData = {
-      userId: user?.id || '',  // This should come from Clerk or your user session
+      userId: user?.id || '', // Clerk user ID
       cartItems: cartItems,
       billingDetails: billingData,
       totalPrice: totalPrice,
       orderStatus: 'pending',
     };
-
-    // Send the order data to your API route
+  
+    // Send the order data to the API route
     const response = await fetch('/api/orders', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(orderData),
     });
-
+  
     const result = await response.json();
     if (result.order) {
-      clearCart();  // Clear the cart after a successful order
+      clearCart(); // Clear cart upon success
       alert("Order placed successfully!");
     } else {
       alert("Failed to place order");
     }
   };
+  
 
   return (
     <div>
@@ -121,10 +128,10 @@ export default function Checkout() {
                   Subtotal: Rs. {totalPrice}
                 </h1>
                 <h1 className="text-right text-sm font-medium text-black">
-                  Tax: Rs. 0 (You can add tax calculations here)
+                  Tax: Rs. {totalPrice * 0.1}
                 </h1>
                 <h1 className="text-right text-xl font-semibold text-[#B88E2F] mt-4">
-                  Total: Rs. {totalPrice}
+                  Total: Rs. {totalPricewithTax}
                 </h1>
               </div>
             </div>

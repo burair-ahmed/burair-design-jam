@@ -33,7 +33,7 @@ export default function AddToCart({
     image: image,
     name: name,
     price: price,
-    quantity: quantity,
+    quantity: Number(quantity),
     id: id,
   };
 
