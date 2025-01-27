@@ -5,6 +5,9 @@ import localFont from "next/font/local";
 import {
   ClerkProvider,
 } from '@clerk/nextjs'
+import CartProvider from "./components/providers";
+import { ShoppingCartPopover } from "./components/shoppingCart";
+
 
 
 const poppins = localFont({
@@ -43,14 +46,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+
     <ClerkProvider>
     <html lang="en">
       <body
         className={`${poppins.variable} antialiased`}
-      >
+        >
+        <CartProvider> 
+                {/* <ShoppingCart/> */}
+
         {children}
+    </CartProvider>
       </body>
     </html>
     </ClerkProvider>
+    
   );
 }

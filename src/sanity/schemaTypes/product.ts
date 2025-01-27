@@ -22,13 +22,13 @@ export const product = defineType({
             title: "Slug",
             type: "slug",
             options: {
-                source: "title", // Generate the slug from the title field
-                maxLength: 200, // Optional: Limit slug length
+                source: "title", 
+                maxLength: 200, 
                 slugify: (input: string) =>
                     input
                         .toLowerCase()
-                        .replace(/\s+/g, "-") // Replace spaces with hyphens
-                        .replace(/[^a-zA-Z0-9-]/g, ""), // Remove special characters
+                        .replace(/\s+/g, "-") 
+                        .replace(/[^a-zA-Z0-9-]/g, ""), 
             },
             validation: (rule) => rule.required(),
         },

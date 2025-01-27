@@ -7,6 +7,13 @@ import { FaBars, FaTimes } from "react-icons/fa";
 import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import BeforeFooter from "../BeforeFooter";
 import { useRouter } from "next/navigation";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
+import { ShoppingCartPopover } from "../shoppingCart";
+
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -149,14 +156,19 @@ export default function Header() {
               height={22}
             />
           </Link>
-          <Link href="#" className="hover:text-gray-700">
+         
+          <Popover>
+  <PopoverTrigger>
             <Image
               src={"/header-icon4.png"}
               alt="Cart"
               width={20}
               height={22}
             />
-          </Link>
+          </PopoverTrigger>
+  <PopoverContent className="w-96 h-96"><ShoppingCartPopover/></PopoverContent>
+</Popover>
+
         </div>
       </div>
     </header>
