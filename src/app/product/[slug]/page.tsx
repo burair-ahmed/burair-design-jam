@@ -229,7 +229,7 @@ export default function ProductDetails({ params }: { params: Promise<{ slug: str
                   </div>
                 </div>
                 <div className="col-span-4 inline-flex items-center mt-4">
-                <button className="rounded-[10px] border text-[16px] border-black text-black px-4 py-4">Add to Cart</button>
+                {/* <button className="rounded-[10px] border text-[16px] border-black text-black px-4 py-4">Add to Cart</button> */}
                 <AddToCart currency="PKR" description={item.description} image={item.productImage?.asset?.url} name={item.title} price={item.price} 
                   quantity={item.quantity?.toString() || ''} key={item._id} id={item._id}/>
                 </div>

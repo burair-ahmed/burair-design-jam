@@ -79,12 +79,6 @@ export default function Header() {
             Blog
           </Link>
           <Link
-            href="/productdetails"
-            className="block py-2 px-4 text-lg font-medium hover:text-gray-700 md:inline"
-          >
-            Product Details
-          </Link>
-          <Link
             href="/contact"
             className="block py-2 px-4 text-lg font-medium hover:text-gray-700 md:inline"
           >
