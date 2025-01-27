@@ -6,7 +6,7 @@ import {
   ClerkProvider,
 } from '@clerk/nextjs'
 import CartProvider from "./components/providers";
-import { ShoppingCartPopover } from "./components/shoppingCart";
+// import { ShoppingCartPopover } from "./components/shoppingCart";
 import { Toaster } from "@/components/ui/toaster"
 
 

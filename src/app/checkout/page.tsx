@@ -90,12 +90,12 @@ const totalPricewithTax = (totalPrice * 0.1) + totalPrice;
         <div className="md:col-span-6 col-span-12 px-4 mt-8 md:mt-20">
           {/* Product and Summary Display */}
           <div className="grid grid-cols-12">
-            <div className="col-span-6">
+            <div className="md:col-span-6 col-span-12">
               <h1 className="text-left text-2xl font-semibold">Products</h1>
               <div className="mt-6">
                 {cartItemCount > 0 ? (
                   Object.values(cartDetails ?? {}).map((item: any) => (
-                    <div key={item.id} className="flex justify-between">
+                    <div key={item.id} className="flex justify-between items-center">
                       <h1 className="text-left text-sm font-medium text-[#9F9F9F]">
                         {item.name} <span className="text-black">x {item.quantity}</span>
                       </h1>
@@ -117,20 +117,22 @@ const totalPricewithTax = (totalPrice * 0.1) + totalPrice;
             </div>
 
             <div className="col-span-6">
-              <h1 className="text-right text-2xl font-semibold">Summary</h1>
+              <h1 className="text-right text-2xl font-semibold hidden md:block">Summary</h1>
             </div>
           </div>
 
           <div className='grid grid-cols-12'>
             <div className='col-span-12'>
-              <div className="mt-6">
-                <h1 className="text-right text-sm font-medium text-black">
+              <h1 className="md:hidden text-left text-2xl font-semibold mt-4">Summary</h1>
+
+              <div className="mt-2">
+                <h1 className="text-left md:text-right text-sm font-medium text-black">
                   Subtotal: Rs. {totalPrice}
                 </h1>
-                <h1 className="text-right text-sm font-medium text-black">
+                <h1 className="text-left md:text-right text-sm font-medium text-black">
                   Tax: Rs. {totalPrice * 0.1}
                 </h1>
-                <h1 className="text-right text-xl font-semibold text-[#B88E2F] mt-4">
+                <h1 className="text-left md:text-right text-xl font-semibold text-[#B88E2F] mt-4">
                   Total: Rs. {totalPricewithTax}
                 </h1>
               </div>

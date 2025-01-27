@@ -35,7 +35,7 @@ export default function Cart() {
                             <div className="grid grid-cols-12 gap-x-4 mx-auto items-center">
                             <div className="col-span-12 md:col-span-6 md:flex md:justify-end">
                                 <Image
-                                src={"/cart-img.png"}
+                                src={item.image}
                                 alt=""
                                 width={105}
                                 height={105}
@@ -46,13 +46,13 @@ export default function Cart() {
                             </div>
                         </div>
                         
-                        <div className="col-span-3 text-left md:pl-8">{item.price}</div>
-                        <div className="col-span-2 text-right md:pr-12">
+                        <div className="col-span-3 text-left pl-6">{item.price}</div>
+                        <div className="col-span-2 text-right pr-4 md:pr-12">
                             {/* <select name="QTY" id="" className="custom-select border-2 border-black rounded-lg"> */}
                                 {item.quantity}
                             {/* </select> */}
                         </div>
-                        <div className="col-span-2 md:text-center md:pl-8">{item.quantity * item.price}</div>
+                        <div className="col-span-2 md:text-center pl-8">{item.quantity * item.price}</div>
                         <div className="col-span-2 md:col-span-1 flex justify-end md:pr-8">
                         <button
                         className=""
