@@ -1,20 +1,71 @@
-"use client";  
+'use client'
 
+import { useState } from 'react';
 import { useShoppingCart } from 'use-shopping-cart';
 import BeforeFooter from "../components/BeforeFooter";
 import BillingForm from "../components/BillingForm";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import PageHero from "../components/Page-Hero";
+import { useUser } from '@clerk/clerk-react';
 
 export default function Checkout() {
   const { cartDetails, cartCount, totalPrice, removeItem, clearCart } = useShoppingCart();
+  const [billingData, setBillingData] = useState({
+    firstName: '',
+    lastName: '',
+    companyName: '',
+    country: '',
+    streetAddress: '',
+    city: '',
+    province: '',
+    zipcode: '',
+    phone: '',
+    email: '',
+    additionalInfo: ''
+  });
+  const { user } = useUser();
   const cartItemCount = cartCount ?? 0;
-  const handlePlaceOrder = () => {
-    // Here you can call your backend to create the order and handle payment
-    // For now, we can just clear the cart after placing an order
-    clearCart();
-    alert("Order placed successfully!");
+
+  // Handle billing form change
+  const handleBillingChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { id, value } = e.target;
+    setBillingData((prevData) => ({
+      ...prevData,
+      [id]: value,
+    }));
+  };
+
+  const handlePlaceOrder = async () => {
+    // Get cart items from use-shopping-cart
+    const cartItems = Object.values(cartDetails ?? {}).map((item: any) => ({
+      _type: 'reference',
+      _ref: item.id,  // Assuming 'id' corresponds to the Sanity product's document ID
+      _key: item.id,  
+    }));
+
+    const orderData = {
+      userId: user?.id || '',  // This should come from Clerk or your user session
+      cartItems: cartItems,
+      billingDetails: billingData,
+      totalPrice: totalPrice,
+      orderStatus: 'pending',
+    };
+
+    // Send the order data to your API route
+    const response = await fetch('/api/orders', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(orderData),
+    });
+
+    const result = await response.json();
+    if (result.order) {
+      clearCart();  // Clear the cart after a successful order
+      alert("Order placed successfully!");
+    } else {
+      alert("Failed to place order");
+    }
   };
 
   return (
@@ -25,36 +76,36 @@ export default function Checkout() {
         <div className="md:col-span-6 col-span-12 px-4 mt-12">
           <h1 className="text-center text-4xl font-semibold">Billing Details</h1>
           <div className="mt-8">
-            <BillingForm />
+            <BillingForm onChange={handleBillingChange} />
           </div>
         </div>
 
         <div className="md:col-span-6 col-span-12 px-4 mt-8 md:mt-20">
+          {/* Product and Summary Display */}
           <div className="grid grid-cols-12">
             <div className="col-span-6">
               <h1 className="text-left text-2xl font-semibold">Products</h1>
-              <div className=" mt-6">
-              {cartItemCount > 0 ? (
-  Object.values(cartDetails ?? {}).map((item: any) => (
-    <div key={item.id} className="flex justify-between">
-      <h1 className="text-left text-sm font-medium text-[#9F9F9F]">
-        {item.name} <span className="text-black">x {item.quantity}</span>
-      </h1>
-      <h1 className="text-left text-sm font-medium text-black">
-        Rs. {item.formattedValue}
-      </h1>
-      <button
-        className="text-red-500"
-        onClick={() => removeItem(item.id)}
-      >
-        Remove
-      </button>
-    </div>
-  ))
-) : (
-  <p className="text-gray-500">Your cart is empty</p>
-)}
-
+              <div className="mt-6">
+                {cartItemCount > 0 ? (
+                  Object.values(cartDetails ?? {}).map((item: any) => (
+                    <div key={item.id} className="flex justify-between">
+                      <h1 className="text-left text-sm font-medium text-[#9F9F9F]">
+                        {item.name} <span className="text-black">x {item.quantity}</span>
+                      </h1>
+                      <h1 className="text-left text-sm font-medium text-black">
+                        Rs. {item.formattedValue}
+                      </h1>
+                      <button
+                        className="text-red-500"
+                        onClick={() => removeItem(item.id)}
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  ))
+                ) : (
+                  <p className="text-gray-500">Your cart is empty</p>
+                )}
               </div>
             </div>
 
@@ -62,6 +113,7 @@ export default function Checkout() {
               <h1 className="text-right text-2xl font-semibold">Summary</h1>
             </div>
           </div>
+
           <div className='grid grid-cols-12'>
             <div className='col-span-12'>
               <div className="mt-6">
@@ -79,60 +131,23 @@ export default function Checkout() {
           </div>
 
           <hr className="mt-8" />
-
           <div className="mt-8">
-            <div className="flex">
-              <div className="flex items-center h-5">
-                <input
-                  id="helper-radio1"
-                  aria-describedby="helper-radio-text"
-                  type="radio"
-                  value=""
-                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                />
-              </div>
-              <div className="ms-2 text-sm">
-                <label className="font-medium text-black">Direct Bank Transfer</label>
-                <p id="helper-radio-text" className="text-xs font-normal text-gray-500 dark:text-gray-300">
-                  Make your payment directly into our bank account. Please use your Order ID as the payment reference.
-                  Your order will not be shipped until the funds have cleared in our account.
-                </p>
-              </div>
+            {/* Payment Methods */}
+            <div className="mt-4">
+              <p className="text-sm">
+                Your personal data will be used to support your experience throughout this website, to manage access to
+                your account, and for other purposes described in our <b>privacy policy.</b>
+              </p>
             </div>
-            <div className="flex">
-              <div className="flex items-center h-5">
-                <input
-                  id="helper-radio2"
-                  aria-describedby="helper-radio-text"
-                  type="radio"
-                  value=""
-                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                />
-              </div>
-              <div className="ms-2 text-sm">
-                <label className="font-medium text-black">Cash On Delivery</label>
-                <p id="helper-radio-text" className="text-xs font-normal text-gray-500 dark:text-gray-300">
-                  Pay with cash upon delivery. Please ensure the exact amount is available as change may not be provided
-                  by the delivery personnel.
-                </p>
-              </div>
+
+            <div className="flex justify-center mt-10">
+              <button
+                className="rounded-[10px] border-2 text-[20px] border-black text-black px-12 py-4"
+                onClick={handlePlaceOrder}
+              >
+                Place Order
+              </button>
             </div>
-          </div>
-
-          <div className="mt-4">
-            <p className="text-sm">
-              Your personal data will be used to support your experience throughout this website, to manage access to
-              your account, and for other purposes described in our <b>privacy policy.</b>
-            </p>
-          </div>
-
-          <div className="flex justify-center mt-10">
-            <button
-              className="rounded-[10px] border-2 text-[20px] border-black text-black px-12 py-4"
-              onClick={handlePlaceOrder}
-            >
-              Place Order
-            </button>
           </div>
         </div>
       </div>

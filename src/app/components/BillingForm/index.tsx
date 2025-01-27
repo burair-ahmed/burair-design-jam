@@ -1,4 +1,8 @@
-export default function BillingForm() {
+interface BillingFormProps {
+    onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => void;
+  }
+  
+  const  BillingForm: React.FC<BillingFormProps> = ({ onChange }) =>  {
     return (
         <div>
                 <form>
@@ -12,6 +16,8 @@ export default function BillingForm() {
                 type="text"
                 id="firstName"
                 className="mt-1 py-5 block w-full border-[1px] border-[#9F9F9F] rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                onChange={onChange}
+
             />
         </div>
         <div>
@@ -22,6 +28,8 @@ export default function BillingForm() {
                 type="text"
                 id="lastName"
                 className="mt-1 py-5 block w-full border-[1px] border-[#9F9F9F] rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                onChange={onChange}
+
             />
         </div>
     </div>
@@ -33,6 +41,8 @@ export default function BillingForm() {
             type="text"
             id="companyName"
             className="mt-1 py-5 block w-full border-[1px] border-[#9F9F9F] rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            onChange={onChange}
+
         />
     </div>
     <div className="mb-6">
@@ -42,6 +52,8 @@ export default function BillingForm() {
         <select
             id="country"
             className="mt-1 py-5 block w-full border-[1px] border-[#9F9F9F] rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            onChange={onChange}
+
         >
             <option value="usa">United States</option>
             <option value="canada">Canada</option>
@@ -56,7 +68,9 @@ export default function BillingForm() {
             type="text"
             id="streetAddress"
             className="mt-1 py-5 block w-full border-[1px] border-[#9F9F9F] rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-        />
+            onChange={onChange}
+
+       />
     </div>
     <div className="mb-6">
         <label htmlFor="city" className="block text-sm font-semibold text-black mb-4">
@@ -66,7 +80,8 @@ export default function BillingForm() {
             type="text"
             id="city"
             className="mt-1 py-5 block w-full border-[1px] border-[#9F9F9F] rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-        />
+            onChange={onChange}
+            />
     </div>
 
     <div className="mb-6">
@@ -77,7 +92,8 @@ export default function BillingForm() {
             type="text"
             id="province"
             className="mt-1 py-5 block w-full border-[1px] border-[#9F9F9F] rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-        />
+            onChange={onChange}
+            />
     </div>
 
     <div className="mb-6">
@@ -88,7 +104,8 @@ export default function BillingForm() {
             type="text"
             id="zipcode"
             className="mt-1 py-5 block w-full border-[1px] border-[#9F9F9F] rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-        />
+            onChange={onChange}
+            />
     </div>
 
     <div className="mb-6">
@@ -99,7 +116,8 @@ export default function BillingForm() {
             type="tel"
             id="phone"
             className="mt-1 py-5 block w-full border-[1px] border-[#9F9F9F] rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-        />
+            onChange={onChange}
+/>
     </div>
 
     <div className="mb-6">
@@ -110,7 +128,8 @@ export default function BillingForm() {
             type="email"
             id="email"
             className="mt-1 py-5 block w-full border-[1px] border-[#9F9F9F] rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-        />
+            onChange={onChange}
+/>
     </div>
 
     <div className="mb-6">
@@ -122,6 +141,7 @@ export default function BillingForm() {
             rows={1}
             placeholder="Additional Information"
             className="mt-1 py-5 px-4 block w-full border-[1px] border-[#9F9F9F] rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            onChange={onChange}
         ></textarea>
     </div>
 </form>
@@ -129,3 +149,5 @@ export default function BillingForm() {
         </div>
     )
 }
+
+export default BillingForm;
