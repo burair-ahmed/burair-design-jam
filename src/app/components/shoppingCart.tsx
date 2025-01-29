@@ -7,7 +7,6 @@ import Link from "next/link";
 export function ShoppingCartPopover() {
   const {
     cartCount,
-    shouldDisplayCart,
     handleCartClick,
     cartDetails,
     removeItem,

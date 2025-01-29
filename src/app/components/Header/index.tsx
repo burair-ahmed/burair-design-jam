@@ -6,22 +6,26 @@ import Link from "next/link";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import BeforeFooter from "../BeforeFooter";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
 import { ShoppingCartPopover } from "../shoppingCart";
+import { useShoppingCart } from "use-shopping-cart";
 
 
 export default function Header() {
+  const {
+      cartCount,
+    } = useShoppingCart();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
-  const router = useRouter();
+  // const router = useRouter();
   const DotIcon = () => {
     return (
       <svg
@@ -153,12 +157,20 @@ export default function Header() {
          
           <Popover>
   <PopoverTrigger>
-            <Image
-              src={"/header-icon4.png"}
-              alt="Cart"
-              width={20}
-              height={22}
-            />
+  <div className="relative">
+  <Image
+    src="/header-icon4.png"
+    alt="Cart"
+    width={20}
+    height={22}
+  />
+ 
+    <div className="absolute -top-2 -right-2 bg-black text-white text-[12px] font-semibold w-4 h-4 rounded-full flex justify-center items-center">
+      {cartCount}
+    </div>
+
+</div>
+
           </PopoverTrigger>
   <PopoverContent className="w-96 h-96"><ShoppingCartPopover/></PopoverContent>
 </Popover>

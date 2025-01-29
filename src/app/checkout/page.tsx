@@ -27,7 +27,6 @@ export default function Checkout() {
   const { user } = useUser();
   const cartItemCount = cartCount ?? 0;
 
-  // Handle billing form change
   const handleBillingChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { id, value } = e.target;
     setBillingData((prevData) => ({
@@ -38,27 +37,26 @@ export default function Checkout() {
 
 const totalPricewithTax = (totalPrice * 0.1) + totalPrice;
   const handlePlaceOrder = async () => {
-    // Map cart items to the required format
-    const cartItems = Object.values(cartDetails ?? {}).map((item: any) => ({
-        _key: `${item.id}-${item.quantity}`, // Unique key
+    
+    const cartItems = Object.values(cartDetails ?? {}).map((item) => ({
+        _key: `${item.id}-${item.quantity}`,
         _type: 'cartItem',
         product: {
           _type: 'reference',
-          _ref: item.id, // Product reference
+          _ref: item.id, 
         },
-        quantity: item.quantity, // Quantity
+        quantity: item.quantity,
       }));
       
   
     const orderData = {
-      userId: user?.id || '', // Clerk user ID
+      userId: user?.id, 
       cartItems: cartItems,
       billingDetails: billingData,
-      totalPrice: totalPrice,
+      totalPrice: totalPricewithTax,
       orderStatus: 'pending',
     };
   
-    // Send the order data to the API route
     const response = await fetch('/api/orders', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -67,7 +65,7 @@ const totalPricewithTax = (totalPrice * 0.1) + totalPrice;
   
     const result = await response.json();
     if (result.order) {
-      clearCart(); // Clear cart upon success
+      clearCart();
       alert("Order placed successfully!");
     } else {
       alert("Failed to place order");
@@ -88,13 +86,13 @@ const totalPricewithTax = (totalPrice * 0.1) + totalPrice;
         </div>
 
         <div className="md:col-span-6 col-span-12 px-4 mt-8 md:mt-20">
-          {/* Product and Summary Display */}
+       
           <div className="grid grid-cols-12">
             <div className="md:col-span-6 col-span-12">
               <h1 className="text-left text-2xl font-semibold">Products</h1>
               <div className="mt-6">
                 {cartItemCount > 0 ? (
-                  Object.values(cartDetails ?? {}).map((item: any) => (
+                  Object.values(cartDetails ?? {}).map((item) => (
                     <div key={item.id} className="flex justify-between items-center">
                       <h1 className="text-left text-sm font-medium text-[#9F9F9F]">
                         {item.name} <span className="text-black">x {item.quantity}</span>
@@ -141,7 +139,7 @@ const totalPricewithTax = (totalPrice * 0.1) + totalPrice;
 
           <hr className="mt-8" />
           <div className="mt-8">
-            {/* Payment Methods */}
+          
             <div className="mt-4">
               <p className="text-sm">
                 Your personal data will be used to support your experience throughout this website, to manage access to

@@ -9,8 +9,10 @@ import Header from "../components/Header";
 import { useShoppingCart } from 'use-shopping-cart';
 import Link from "next/link";
 
+
+  
 export default function Cart() {
-      const { cartDetails, cartCount, totalPrice, removeItem, clearCart } = useShoppingCart();
+      const { cartDetails, cartCount, totalPrice, removeItem } = useShoppingCart();
       const cartItemCount = cartCount ?? 0;
 
       
@@ -28,14 +30,14 @@ export default function Cart() {
                         <div className="col-span-3 text-center">Subtotal</div>
                     </div>
                     {cartItemCount > 0 ? (
-                  Object.values(cartDetails ?? {}).map((item: any) => (
+                  Object.values(cartDetails ?? {}).map((item) => (
                     <div key={item.id}>  
                     <div className="grid grid-cols-12 py-4 font-semibold md:gap-x-4 gap-x-2 items-center">
                         <div className="md:col-span-4 col-span-3">
                             <div className="grid grid-cols-12 gap-x-4 mx-auto items-center">
                             <div className="col-span-12 md:col-span-6 md:flex md:justify-end">
                                 <Image
-                                src={item.image}
+                                src={item.image ?? "/default-image.png"}
                                 alt=""
                                 width={105}
                                 height={105}

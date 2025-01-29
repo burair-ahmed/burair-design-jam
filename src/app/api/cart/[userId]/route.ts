@@ -30,6 +30,7 @@ export async function GET(req: NextRequest, { params }: { params: { userId: stri
 
     return NextResponse.json(cart[0], { status: 200 });
   } catch (error) {
+    console.error('Error fetching cart data:', error);
     return NextResponse.json({ message: 'Failed to fetch cart data' }, { status: 500 });
   }
 }
