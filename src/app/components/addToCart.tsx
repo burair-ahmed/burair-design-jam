@@ -1,6 +1,6 @@
 "use client";
 import { useShoppingCart } from "use-shopping-cart";
-import { useToast } from "@/hooks/use-toast"; // Make sure your toast hook is correctly imported
+import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@/components/ui/toast"
 import Link from "next/link";
 
@@ -25,7 +25,7 @@ export default function AddToCart({
   id,
 }: ProductCart) {
   const { addItem, handleCartClick } = useShoppingCart();
-  const { toast } = useToast(); // Access the toast function
+  const { toast } = useToast();
 
   const product = {
     currency: currency,

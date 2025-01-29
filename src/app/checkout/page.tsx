@@ -8,7 +8,9 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import PageHero from "../components/Page-Hero";
 import { useUser } from '@clerk/clerk-react';
-
+import { useToast } from "@/hooks/use-toast";
+import { ToastAction } from "@/components/ui/toast"
+import Link from 'next/link';
 export default function Checkout() {
   const { cartDetails, cartCount, totalPrice, removeItem, clearCart } = useShoppingCart();
   const [billingData, setBillingData] = useState({
@@ -26,7 +28,7 @@ export default function Checkout() {
   });
   const { user } = useUser();
   const cartItemCount = cartCount ?? 0;
-
+  const { toast } = useToast();
   const handleBillingChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { id, value } = e.target;
     setBillingData((prevData) => ({
@@ -38,21 +40,54 @@ export default function Checkout() {
   const totalPricewithTax = (totalPrice ?? 0) * 0.1 + (totalPrice ?? 0);
 
   const handlePlaceOrder = async () => {
-    
-    const cartItems = Object.values(cartDetails ?? {}).map((item) => ({
-        _key: `${item.id}-${item.quantity}`,
-        _type: 'cartItem',
-        product: {
-          _type: 'reference',
-          _ref: item.id, 
-        },
-        quantity: item.quantity,
-      }));
-      
+    if (!billingData.firstName || !billingData.lastName || !billingData.streetAddress || !billingData.city || !billingData.zipcode || !billingData.phone || !billingData.email) {
+      toast({
+        variant: 'destructive',
+        action: (
+          <div className="flex items-center">
+           
+          </div>
+        ),
+        title: `Something is Missing`,  
+        description: "Please Fill out the complete form 😊",
+        duration: 3000, 
+      });
+      return;
+    }
+  
+    const cartItems = Object.values(cartDetails ?? {});
+    if (cartItems.length === 0) {
+      toast({
+        variant: 'destructive',
+        title: 'Cart is Empty',
+        description: 'Your cart is empty. Add some items to place an order.',
+        action: (
+          <div className="flex items-center">
+            <ToastAction altText="Go To Shop">
+              <Link href="/shop">Go To Shop</Link>
+            </ToastAction>
+          </div>
+        ),
+        duration: 3000,
+      });
+      return;
+    }
+  
+    const preparedCartItems = cartItems.map((item) => ({
+      _key: `${item.id}-${item.quantity}`,
+      _type: 'cartItem',
+      product: {
+        _type: 'reference',
+        _ref: item.id,
+      },
+      quantity: item.quantity,
+    }));
+  
+     
   
     const orderData = {
-      userId: user?.id, 
-      cartItems: cartItems,
+      userId: user?.id,
+      cartItems: preparedCartItems,
       billingDetails: billingData,
       totalPrice: totalPricewithTax,
       orderStatus: 'pending',
@@ -66,12 +101,23 @@ export default function Checkout() {
   
     const result = await response.json();
     if (result.order) {
-      clearCart();
-      alert("Order placed successfully!");
-    } else {
-      alert("Failed to place order");
+      clearCart();  
+      toast({
+        title: 'Order Placed Successfully!',
+        description: 'Thank you for your order. You will receive a confirmation email shortly.',
+        duration: 3000,
+      });
+      } else {
+        toast({
+          variant: 'destructive',
+          title: 'Failed to Place Order',
+          description: 'There was an issue placing your order. Please try again later.',
+          duration: 3000,
+        });
+    
     }
   };
+  
   
 
   return (
