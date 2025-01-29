@@ -1,4 +1,4 @@
-import { NextResponse, NextRequest } from 'next/server'; // Import NextRequest
+import { NextResponse, NextRequest } from 'next/server';
 import { client } from '../../../../sanity/lib/client'; // Ensure this path is correct
 import { getAuth } from '@clerk/nextjs/server';
 
