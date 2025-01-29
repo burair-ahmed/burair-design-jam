@@ -35,7 +35,8 @@ export default function Checkout() {
     }));
   };
 
-const totalPricewithTax = (totalPrice * 0.1) + totalPrice;
+  const totalPricewithTax = (totalPrice ?? 0) * 0.1 + (totalPrice ?? 0);
+
   const handlePlaceOrder = async () => {
     
     const cartItems = Object.values(cartDetails ?? {}).map((item) => ({
@@ -128,7 +129,7 @@ const totalPricewithTax = (totalPrice * 0.1) + totalPrice;
                   Subtotal: Rs. {totalPrice}
                 </h1>
                 <h1 className="text-left md:text-right text-sm font-medium text-black">
-                  Tax: Rs. {totalPrice * 0.1}
+                Tax: Rs. {(totalPrice ?? 0) * 0.1}
                 </h1>
                 <h1 className="text-left md:text-right text-xl font-semibold text-[#B88E2F] mt-4">
                   Total: Rs. {totalPricewithTax}
