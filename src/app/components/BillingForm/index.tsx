@@ -17,7 +17,7 @@ const BillingForm: React.FC<BillingFormProps> = ({ onChange }) => {
 
   const handleValidation = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { id, value } = e.target;
-    let errors = formErrors;
+    const errors = formErrors;
 
     switch (id) {
       case 'firstName':
