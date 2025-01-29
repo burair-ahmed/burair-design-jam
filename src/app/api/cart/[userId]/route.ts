@@ -1,4 +1,3 @@
-// src/app/api/cart/[userId]/route.ts
 import { NextResponse, NextRequest } from 'next/server'; // Import NextRequest
 import { client } from '../../../../sanity/lib/client'; // Ensure this path is correct
 import { getAuth } from '@clerk/nextjs/server';
