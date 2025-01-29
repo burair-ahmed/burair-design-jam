@@ -5,6 +5,7 @@ import {ReactNode} from "react";
 export default function CartProvider({children}: {children: ReactNode}) {
     return (
         <div>
+            {/* Edited libraby */}
             <USCProvider
             mode="payment"
             cartMode="client-only"
@@ -13,7 +14,9 @@ export default function CartProvider({children}: {children: ReactNode}) {
             currency="PKR"
             billingAddressCollection={true}
             shouldPersist={true}
-            language="en-US">
+            language="en-US"
+            stripe={""}
+            >
                 {children}
             </USCProvider>
         </div>
