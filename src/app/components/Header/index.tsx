@@ -14,9 +14,14 @@ import {
 } from "@/components/ui/popover"
 import { ShoppingCartPopover } from "../shoppingCart";
 import { useShoppingCart } from "use-shopping-cart";
+import { useUser } from '@clerk/clerk-react';
 
 
 export default function Header() {
+
+  const { user } = useUser();
+  
+  const username = user?.username 
   const {
       cartCount,
     } = useShoppingCart();
@@ -180,7 +185,7 @@ export default function Header() {
       </div>
     </header>
 
-<div className="fixed bottom-0 left-0 z-50 w-full h-16 bg-white border-t border-gray-200 dark:bg-gray-700 dark:border-gray-600">
+<div className="fixed bottom-0 left-0 z-50 w-full h-16 bg-white border-t border-gray-200 dark:bg-gray-700 dark:border-gray-600 md:hidden">
 <div className="grid h-full max-w-lg grid-cols-4 mx-auto font-medium">
     <button type="button" className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group">
         <svg className="w-5 h-5 mb-2 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -195,12 +200,33 @@ export default function Header() {
         </svg>
         <span className="text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">Wallet</span>
     </button>
-    <button type="button" className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group">
+    {/* <button type="button" className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group">
         <svg className="w-5 h-5 mb-2 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 12.25V1m0 11.25a2.25 2.25 0 0 0 0 4.5m0-4.5a2.25 2.25 0 0 1 0 4.5M4 19v-2.25m6-13.5V1m0 2.25a2.25 2.25 0 0 0 0 4.5m0-4.5a2.25 2.25 0 0 1 0 4.5M10 19V7.75m6 4.5V1m0 11.25a2.25 2.25 0 1 0 0 4.5 2.25 2.25 0 0 0 0-4.5ZM16 19v-2"/>
+            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 12.25V1m0 11.25a2.25 2.25 0 0 0 0 4.5m0-4.5a2.25 2.25 0 0 1 0 4.5M4 19v-2.25m6-13.5V1m0 2.25a2.25 2.25 0 0 0 0 4.5m0-4.5a2.25 2.25 0 0 1 0 4.5M10 19V7.75m6 4.5V1m0 11.25a2.25 2.25 0 1 0 0 4.5 2.25 2.25 0 0 0 0-4.5ZM16 19v-2"/>
         </svg>
         <span className="text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">Settings</span>
-    </button>
+    </button> */}
+    <div className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group">
+    <Popover>
+  <PopoverTrigger>
+  <div className="relative">
+  <Image
+    src="/header-icon4.png"
+    alt="Cart"
+    width={20}
+    height={22}
+  />
+ 
+    <div className="absolute -top-2 -right-2 bg-black text-white text-[12px] font-semibold w-4 h-4 rounded-full flex justify-center items-center">
+      {cartCount}
+    </div>
+
+</div>
+
+          </PopoverTrigger>
+  <PopoverContent className="w-96 h-96"><ShoppingCartPopover/></PopoverContent>
+</Popover>
+    </div>
     <div className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group">
 
     <SignedOut >
@@ -214,6 +240,8 @@ export default function Header() {
                 />
               </Link>
             </SignInButton>
+            <span className="text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">Sign In</span>
+
           </SignedOut>
           <SignedIn>
             <UserButton userProfileUrl="/user-profile">
@@ -248,7 +276,7 @@ export default function Header() {
                 </div>
               </UserButton.UserProfilePage>
             </UserButton>
-            <span className="text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">Settings</span>
+            <span className="text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">{username}</span>
           </SignedIn>
     </div>
 </div>
