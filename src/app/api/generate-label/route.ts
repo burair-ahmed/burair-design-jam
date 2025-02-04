@@ -55,7 +55,7 @@ export async function POST(req: NextRequest) {
       validate_address: 'no_validation', 
     };
 
-    console.log('Label Request:', labelRequest);
+    // console.log('Label Request:', labelRequest);
 
     const response = await fetch(API_URL, {
       method: 'POST',
@@ -71,7 +71,7 @@ export async function POST(req: NextRequest) {
     if (response.ok) {
       console.log('Label generated successfully:', result);
       
-      return NextResponse.json({ success: true, labelUrl: result.label_url }, { status: 200 });
+      return NextResponse.json({ success: true, label: result }, { status: 200 });
     } else {
       console.error('ShipEngine error:', result);  
       return NextResponse.json({ success: false, message: result.errors[0].message }, { status: 400 });
