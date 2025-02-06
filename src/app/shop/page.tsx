@@ -17,6 +17,7 @@ import {
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
+import AddToCart2 from "../components/addToCart2";
 
 type Product = {
   _id: string;
@@ -38,82 +39,9 @@ type Product = {
     _type: "slug";
     current: string;
   };
+  quantity?: number;
 };
 
-// const productlist = [
-//   {
-//     id: 1,
-//     image: "/product1.png",
-//     title: "Syltherine",
-//     description: "Stylish cafe chair",
-//     price: 3500000,
-//     discounted_price: 2500000,
-//     discount: "20%",
-//   },
-//   {
-//     id: 2,
-//     image: "/product2.png",
-//     title: "Leviosa",
-//     description: "Stylish cafe chair",
-//     price: "",
-//     discounted_price: 2500000,
-//     discount: "20%",
-//   },
-//   {
-//     id: 3,
-//     image: "/product3.png",
-//     title: "Lolito",
-//     description: "Luxury big sofa",
-//     price: 14000000,
-//     discounted_price: 7000000,
-//     discount: "25%",
-//   },
-//   {
-//     id: 4,
-//     image: "/product4.jpg",
-//     title: "Lolito",
-//     description: "Luxury big sofa",
-//     price: "",
-//     discounted_price: 500000,
-//     discount: "New",
-//   },
-//   {
-//     id: 5,
-//     image: "/product1.png",
-//     title: "Syltherine",
-//     description: "Stylish cafe chair",
-//     price: 3500000,
-//     discounted_price: 2500000,
-//     discount: "20%",
-//   },
-//   {
-//     id: 6,
-//     image: "/product2.png",
-//     title: "Leviosa",
-//     description: "Stylish cafe chair",
-//     price: "",
-//     discounted_price: 2500000,
-//     discount: "20%",
-//   },
-//   {
-//     id: 7,
-//     image: "/product3.png",
-//     title: "Lolito",
-//     description: "Luxury big sofa",
-//     price: 14000000,
-//     discounted_price: 7000000,
-//     discount: "25%",
-//   },
-//   {
-//     id: 8,
-//     image: "/product4.jpg",
-//     title: "Lolito",
-//     description: "Luxury big sofa",
-//     price: "",
-//     discounted_price: 500000,
-//     discount: "New",
-//   },
-// ];
 
 async function getProducts(): Promise<Product[]> {
   const query = `*[_type == "product"]{
@@ -272,9 +200,8 @@ export default function Shop() {
                 <div className="absolute top-[10%] left-[17%] space-x-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <div className="grid grid-cols-12 items-center justify-center pt-[100px]">
                     <div className="col-span-12 flex justify-center items-center">
-                      <button className="text-[#b88e2f] font-bold flex text-lg space-x-8 bg-white p-2 hover:bg-gray-800 transition px-8">
-                        Add to Cart
-                      </button>
+                        <AddToCart2 currency="PKR" description={product.description} image={product.productImage?.asset?.url} name={product.title} price={product.price} 
+                                                          quantity={product.quantity?.toString() || ''} key={product._id} id={product._id}/>
                     </div>
 
                     <div className="col-span-12 flex justify-center items-center space-x-4 mt-4">

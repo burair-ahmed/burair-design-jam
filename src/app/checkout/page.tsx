@@ -177,6 +177,70 @@ export default function Checkout() {
 
 
   };
+
+
+  const handleGenerateLabel = async () => {
+    if (!selectedRate) {
+      toast({
+        variant: 'destructive',
+        title: 'No Shipping Option Selected',
+        description: 'Please select a shipping option to proceed.',
+        duration: 3000,
+      });
+      return;
+    }
+  
+    setLoading(true); 
+    try {
+      const serviceCode = selectedRate.service_code;
+  
+      const response = await fetch("/api/generate-label", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          serviceCode,
+          shippingDetails: shippingData,
+          billingDetails: billingData,
+        }),
+      });
+  
+      const result = await response.json();
+      // console.log(result);
+  
+      setShipmentAmount(result.label.shipment_cost.amount);
+  
+      setIsDialogOpen(true);
+      if (result.success) {
+        const calculatedTotalWithShipping = totalPricewithTax + (result.label.shipment_cost.amount || 0); // Handle potential null
+      setTotalWithShipping(calculatedTotalWithShipping);
+
+        toast({
+          title: "Shipping Label Generated!",
+          description: "Your shipping label has been created successfully.",
+          duration: 3000,
+        });
+      } else {
+        toast({
+          variant: "destructive",
+          title: "Error Generating Label",
+          description: result.message,
+          duration: 3000,
+        });
+      }
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Network Error",
+        description: "Something went wrong. Please try again later.",
+        duration: 3000,
+      });
+      console.error("Error generating label:", error);
+    } finally {
+      setLoading(false);
+    }
+  
+  };
+
   const handlePlaceOrder = async () => {
     if (!billingData.firstName || !billingData.lastName || !billingData.streetAddress || !billingData.city || !billingData.zipcode || !billingData.phone || !billingData.email) {
       toast({
@@ -254,74 +318,74 @@ export default function Checkout() {
 
   };
 
-
-  const handleGenerateLabel = async () => {
-    if (!selectedRate) {
+  const handleStripePayment = async () => {
+    if (!cartDetails || Object.keys(cartDetails).length === 0) {
       toast({
-        variant: 'destructive',
-        title: 'No Shipping Option Selected',
-        description: 'Please select a shipping option to proceed.',
+        variant: "destructive",
+        title: "Cart is Empty",
+        description: "Add items to your cart before proceeding.",
         duration: 3000,
       });
       return;
     }
   
-    setLoading(true); 
-    try {
-      const serviceCode = selectedRate.service_code;
+    // Map the cart items into the Stripe line_items format
+    const lineItems = Object.values(cartDetails).map((item) => ({
+      price_data: {
+        currency: "usd",
+        product_data: {
+          name: item.name, // The name of the product
+        },
+        unit_amount: item.price * 100, // The price in cents
+      },
+      quantity: item.quantity, // Quantity of the item
+    }));
   
-      const response = await fetch("/api/generate-label", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          serviceCode,
-          shippingDetails: shippingData,
-          billingDetails: billingData,
-        }),
-      });
+    const response = await fetch("/api/checkout", {
+      method: "POST", // Ensure method is POST
+      headers: {
+        "Content-Type": "application/json", // Set content type as JSON
+      },
+      body: JSON.stringify({
+        lineItems, // Pass the mapped line items
+      }),
+    });
   
-      const result = await response.json();
-      // console.log(result);
-  
-      setShipmentAmount(result.label.shipment_cost.amount);
-  
-      setIsDialogOpen(true);
-      if (result.success) {
-        const calculatedTotalWithShipping = totalPricewithTax + (result.label.shipment_cost.amount || 0); // Handle potential null
-      setTotalWithShipping(calculatedTotalWithShipping);
-
-        toast({
-          title: "Shipping Label Generated!",
-          description: "Your shipping label has been created successfully.",
-          duration: 3000,
-        });
-      } else {
-        toast({
-          variant: "destructive",
-          title: "Error Generating Label",
-          description: result.message,
-          duration: 3000,
-        });
-      }
-    } catch (error) {
+    // Handle the response from the API
+    if (!response.ok) {
+      console.error("Error in API request:", response.statusText);
       toast({
         variant: "destructive",
-        title: "Network Error",
-        description: "Something went wrong. Please try again later.",
+        title: "Payment Error",
+        description: "Failed to initiate payment. Please try again.",
         duration: 3000,
       });
-      console.error("Error generating label:", error);
-    } finally {
-      setLoading(false);
+      return;
     }
   
+    const data = await response.json();
+    if (data.url) {
+      window.location.href = data.url; // Redirect to Stripe Checkout page
+    } else {
+      toast({
+        variant: "destructive",
+        title: "Payment Error",
+        description: "No URL received for payment. Please try again.",
+        duration: 3000,
+      });
+    }
   };
+  
+  
+  
 
-
-  const handleOnlinePayment = async () => {
-  console.log("Redirecting to Online Payment...");
+const handlePayment = () => {
+  if (paymentMethod === "COD") {
+    handlePlaceOrder();
+  } else {
+    handleStripePayment();
+  }
 };
-
   
 
   return (
@@ -559,10 +623,10 @@ export default function Checkout() {
 
         <DialogFooter>
         <button
-  className={`rounded-[10px] border-2 text-[16px] border-black text-black px-3 py-1 hover:bg-black hover:transition hover:text-white`}
-  onClick={paymentMethod === "COD" ? handlePlaceOrder : handleOnlinePayment}
+  className="rounded-[10px] border-2 text-[16px] border-black text-black px-3 py-1 hover:bg-black hover:transition hover:text-white"
+  onClick={handlePayment}
 >
-  {paymentMethod === "COD" ? "Place Order" : "Proceed to Payment"}
+  {paymentMethod === "COD" ? "Place Order" : "Pay with Stripe"}
 </button>
         </DialogFooter>
       </DialogContent>
