@@ -18,23 +18,40 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog"
 // import { CloudLightning } from 'lucide-react';
 import { Loader2 } from "lucide-react"; 
 
 
+interface ShippingRate {
+  rate_id: string;
+  service_code: string;
+  service_type: string;
+  shipping_amount: {
+    amount: number;
+    currency: string;
+  };
+  delivery_days: number;
+  estimated_delivery_date: string;
+}
+
+interface ShipmentAmount {
+  amount: number;
+  currency: string;
+}
+
+
 export default function Checkout() {
   const [isShippingSame, setIsShippingSame] = useState(true);
   const { cartDetails, cartCount, totalPrice, removeItem, clearCart } = useShoppingCart();
-  const [shippingRates, setShippingRates] = useState<any>([]); 
+  const [shippingRates, setShippingRates] = useState<ShippingRate[]>([]); 
   const [orderPlaced, setOrderPlaced] = useState(false);
-  const [shipmentAmount, setShipmentAmount] = useState<any>([]); 
+  const [shipmentAmount, setShipmentAmount] = useState<ShipmentAmount | null>(null);  
   const { user } = useUser();
   const cartItemCount = cartCount ?? 0;
   const { toast } = useToast();
   const totalPricewithTax = (totalPrice ?? 0) * 0.1 + (totalPrice ?? 0);
-  const [selectedRate, setSelectedRate] = useState<any>(null);  
+  const [selectedRate, setSelectedRate] = useState<ShippingRate | null>(null);    
   const [loading, setLoading] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false); 
   const [paymentMethod, setPaymentMethod] = useState("COD"); 
@@ -47,6 +64,7 @@ export default function Checkout() {
     streetAddress: '',
     city: '',
     province: '',
+    stateProvince: '',
     zipcode: '',
     phone: '',
     email: '',
@@ -57,6 +75,7 @@ export default function Checkout() {
     lastName: '',
     streetAddress: '',
     city: '',
+    stateProvince: '',
     zipcode: '',
     phone: '',
     email: '',
@@ -298,7 +317,6 @@ export default function Checkout() {
 
 
   const handleOnlinePayment = async () => {
-  // Redirect user to payment gateway or show payment modal
   console.log("Redirecting to Online Payment...");
 };
 
@@ -525,10 +543,10 @@ export default function Checkout() {
                 Tax: Rs. {(totalPrice ?? 0) * 0.1}
                 </h1>
                 <h1 className="text-left md:text-right text-sm font-medium text-black">
-                Shipping. Rs.{shipmentAmount}
+                Shipping. Rs.{shipmentAmount ? shipmentAmount.amount : 0}
                 </h1>
                 <h1 className="text-left md:text-right text-xl font-semibold text-[#B88E2F] mt-4">
-                  Total: Rs. {totalPricewithTax + shipmentAmount}
+                  Total: Rs. {totalPricewithTax + (shipmentAmount ? shipmentAmount.amount : 0)}
                 </h1>
               </div>
             </div>

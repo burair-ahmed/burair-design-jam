@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function POST(req: NextRequest) {
   try {
    
-    const { shippingDetails, billingDetails, serviceCode } = await req.json();
+    const { billingDetails, serviceCode } = await req.json();
     // console.log('Request Payload:', { shippingDetails, billingDetails, serviceCode });
 
     // Ensure country_code is not empty

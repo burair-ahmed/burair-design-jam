@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { client } from "../../../sanity/lib/client";
 import Link from "next/link";
 import Image from 'next/image';

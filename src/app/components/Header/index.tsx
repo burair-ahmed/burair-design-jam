@@ -47,7 +47,7 @@ export default function Header() {
    <div>
      <header className="bg-white shadow-md">
       <div className="grid grid-cols-12 items-center p-4">
-        {/* Left Column - Logo */}
+ 
         <div className="col-span-6 md:col-span-4 flex justify-start">
           <Image
             src="/logo.png"
@@ -58,14 +58,12 @@ export default function Header() {
           />
         </div>
 
-        {/* Hamburger Menu Icon for Mobile */}
         <div className="col-span-6 md:hidden flex justify-end text-2xl">
           <button onClick={toggleMobileMenu} className="focus:outline-none">
             {isMobileMenuOpen ? <FaTimes /> : <FaBars />}
           </button>
         </div>
 
-        {/* Center Column - Menu */}
         <div
           className={`${
             isMobileMenuOpen ? "block" : "hidden"
@@ -97,7 +95,6 @@ export default function Header() {
           </Link>
         </div>
 
-        {/* Right Column - Icons */}
         <div className="col-span-4 hidden md:flex justify-end space-x-6 text-xl items-center">
           <SignedOut>
             <SignInButton mode="modal">

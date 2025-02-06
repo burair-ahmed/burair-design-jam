@@ -1,13 +1,27 @@
 import React, { useState } from "react";
 
+interface FormData {
+  firstName: string;
+  lastName: string;
+  streetAddress: string;
+  stateProvince: string;
+  city: string;
+  zipcode: string;
+  phone: string;
+  email: string;
+  additionalInfo?: string;
+}
+
+
 interface BillingFormProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => void;
-  billingData: any;
-  shippingData: any;
+  billingData: FormData;
+  shippingData: FormData;
   isShippingSame: boolean;
-  setShippingData: React.Dispatch<React.SetStateAction<any>>;
+  setShippingData: React.Dispatch<React.SetStateAction<FormData>>;
   setIsShippingSame: React.Dispatch<React.SetStateAction<boolean>>;
 }
+
 
 const BillingForm: React.FC<BillingFormProps> = ({
   onChange,
