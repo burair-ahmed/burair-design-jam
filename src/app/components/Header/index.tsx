@@ -15,6 +15,7 @@ import {
 import { ShoppingCartPopover } from "../shoppingCart";
 import { useShoppingCart } from "use-shopping-cart";
 import { useUser } from '@clerk/clerk-react';
+import ProductSearch from "../ProductSearch";
 
 
 export default function Header() {
@@ -144,14 +145,19 @@ export default function Header() {
               </UserButton.UserProfilePage>
             </UserButton>
           </SignedIn>
-          <Link href="#" className="hover:text-gray-700">
+<Popover>
+          <PopoverTrigger>
+          {/* <Link href="#" className="hover:text-gray-700"> */}
             <Image
               src={"/header-icon2.png"}
               alt="Search"
               width={20}
               height={22}
             />
-          </Link>
+          {/* </Link> */}
+          </PopoverTrigger>
+          <PopoverContent className="w-96 h-96"><ProductSearch/></PopoverContent>
+          </Popover>
           <Link href="#" className="hover:text-gray-700">
             <Image
               src={"/header-icon3.png"}

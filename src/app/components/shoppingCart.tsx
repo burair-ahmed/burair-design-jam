@@ -11,6 +11,8 @@ export function ShoppingCartPopover() {
     cartDetails,
     removeItem,
     totalPrice,
+    incrementItem,
+    decrementItem,
   } = useShoppingCart();
 
   return (
@@ -40,11 +42,11 @@ export function ShoppingCartPopover() {
                     <div>
                       <div className="flex justify-between text-base font-semibold text-gray-900">
                         <h3>{entry.name}</h3>
-                        <p>Rs {entry.price}</p>
+                        <p>Rs {entry.price * entry.quantity}</p>
                       </div>
                     </div>
                     <div className="flex flex-1 items-end justify-between text-sm">
-                      <p className="text-gray-500">Qty: {entry.quantity}</p>
+                      <p className="text-gray-500 flex gap-2 items-center">Qty: <span className="font-black text-lg p-0"><button onClick={() => decrementItem(entry.id)}>-</button></span>{entry.quantity}<span className="font-black text-lg p-0"><button onClick={() => incrementItem(entry.id)}>+</button></span></p>
                       <button
                         type="button"
                         className="font-medium text-red-500 hover:text-red-600"

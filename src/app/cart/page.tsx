@@ -12,7 +12,7 @@ import Link from "next/link";
 
   
 export default function Cart() {
-      const { cartDetails, cartCount, totalPrice, removeItem } = useShoppingCart();
+      const { cartDetails, cartCount, totalPrice, removeItem, decrementItem, incrementItem } = useShoppingCart();
       const cartItemCount = cartCount ?? 0;
 
       
@@ -51,7 +51,9 @@ export default function Cart() {
                         <div className="col-span-3 text-left pl-6">{item.price}</div>
                         <div className="col-span-2 text-right pr-4 md:pr-12">
                             {/* <select name="QTY" id="" className="custom-select border-2 border-black rounded-lg"> */}
+                            <span className="font-black text-lg mr-2"><button onClick={() => decrementItem(item.id)}>-</button></span>
                                 {item.quantity}
+                            <span className="font-black text-lg ml-2"><button onClick={() => incrementItem(item.id)}>+</button></span>
                             {/* </select> */}
                         </div>
                         <div className="col-span-2 md:text-center pl-8">{item.quantity * item.price}</div>

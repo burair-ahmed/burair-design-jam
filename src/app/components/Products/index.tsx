@@ -11,6 +11,7 @@ import {
   CardHeader,
 } from "@/components/ui/card"
 import { useState, useEffect } from "react";
+import AddToCart2 from "../addToCart2";
 
 
 type Product = {
@@ -33,6 +34,7 @@ type Product = {
     _type: "slug";
     current: string;
   };
+  quantity?: number;
 };
 
 
@@ -151,9 +153,8 @@ export default function Products() {
             <div className="absolute top-[10%] left-[17%] space-x-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
               <div className="grid grid-cols-12 items-center justify-center pt-[100px]">
                 <div className="col-span-12 flex justify-center items-center">
-                  <button className="text-[#b88e2f] font-bold flex text-lg space-x-8 bg-white p-2 hover:bg-gray-800 transition px-8">
-                    Add to Cart
-                  </button>
+                  <AddToCart2 currency="PKR" description={product.description} image={product.productImage?.asset?.url} name={product.title} price={product.price} 
+                                    quantity={product.quantity?.toString() || ''} key={product._id} id={product._id}/>
                 </div>
 
                 <div className="col-span-12 flex justify-center items-center space-x-4 mt-4">
