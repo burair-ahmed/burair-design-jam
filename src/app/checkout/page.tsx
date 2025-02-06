@@ -35,10 +35,6 @@ interface ShippingRate {
   estimated_delivery_date: string;
 }
 
-interface ShipmentAmount {
-  amount: number;
-  currency: string;
-}
 
 
 export default function Checkout() {
@@ -46,7 +42,7 @@ export default function Checkout() {
   const { cartDetails, cartCount, totalPrice, removeItem, clearCart } = useShoppingCart();
   const [shippingRates, setShippingRates] = useState<ShippingRate[]>([]); 
   const [orderPlaced, setOrderPlaced] = useState(false);
-  const [shipmentAmount, setShipmentAmount] = useState<ShipmentAmount | null>(null);  
+  const [shipmentAmount, setShipmentAmount] = useState<number  | null>(null);  
   const { user } = useUser();
   const cartItemCount = cartCount ?? 0;
   const { toast } = useToast();
@@ -55,6 +51,8 @@ export default function Checkout() {
   const [loading, setLoading] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false); 
   const [paymentMethod, setPaymentMethod] = useState("COD"); 
+  const [totalWithShipping, setTotalWithShipping] = useState(totalPricewithTax);
+
 
   const [billingData, setBillingData] = useState({
     firstName: '',
@@ -222,10 +220,11 @@ export default function Checkout() {
       userId: user?.id,
       cartItems: preparedCartItems,
       billingDetails: billingData,
-      totalPrice: totalPricewithTax,
+      totalPrice: totalWithShipping,
       shippingDetails: isShippingSame ? billingData : shippingData,
       orderStatus: 'pending',
       paymentMethod: paymentMethod,
+
     };
   
     const response = await fetch('/api/orders', {
@@ -288,6 +287,9 @@ export default function Checkout() {
   
       setIsDialogOpen(true);
       if (result.success) {
+        const calculatedTotalWithShipping = totalPricewithTax + (result.label.shipment_cost.amount || 0); // Handle potential null
+      setTotalWithShipping(calculatedTotalWithShipping);
+
         toast({
           title: "Shipping Label Generated!",
           description: "Your shipping label has been created successfully.",
@@ -543,10 +545,10 @@ export default function Checkout() {
                 Tax: Rs. {(totalPrice ?? 0) * 0.1}
                 </h1>
                 <h1 className="text-left md:text-right text-sm font-medium text-black">
-                Shipping. Rs.{shipmentAmount ? shipmentAmount.amount : 0}
+                Shipping. Rs.{shipmentAmount ?? 0}
                 </h1>
                 <h1 className="text-left md:text-right text-xl font-semibold text-[#B88E2F] mt-4">
-                  Total: Rs. {totalPricewithTax + (shipmentAmount ? shipmentAmount.amount : 0)}
+                  Total: Rs. {totalWithShipping}
                 </h1>
               </div>
             </div>
