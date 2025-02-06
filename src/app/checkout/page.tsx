@@ -236,7 +236,7 @@ export default function Checkout() {
   
     const result = await response.json();
     if (result.order) {
-      // clearCart();
+      clearCart();
       toast({
         title: 'Order Placed Successfully!',
         description: 'Thank you for your order. You will receive a confirmation email shortly.',
@@ -416,7 +416,7 @@ export default function Checkout() {
       <div>
         <ul>
         <div className="flex flex-wrap">
-  {shippingRates.map((rate: any, index: number) => (
+  {shippingRates.map((rate: ShippingRate, index: number) => (
     <div key={index} className="w-full sm:w-1/2 md:w-1/4 lg:w-1/4">
       <li className="p-4 border rounded-lg shadow-md hover:shadow-lg transition-all duration-200 bg-white flex gap-2 h-full">
         <label htmlFor={`rate-${rate.rate_id}`} className="flex flex-col gap-2 cursor-pointer">
