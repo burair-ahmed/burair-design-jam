@@ -8,7 +8,8 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import PageHero from "../components/Page-Hero";
 import { useUser } from '@clerk/clerk-react';
-import { useToast } from "@/hooks/use-toast";
+// import { useToast } from "@/hooks/use-toast";
+import { toast } from "sonner"
 import { ToastAction } from "@/components/ui/toast"
 import Link from 'next/link';
 import {
@@ -21,6 +22,7 @@ import {
 } from "@/components/ui/dialog"
 // import { CloudLightning } from 'lucide-react';
 import { Loader2 } from "lucide-react"; 
+import { useRouter } from 'next/navigation'; 
 
 
 interface ShippingRate {
@@ -43,16 +45,16 @@ export default function Checkout() {
   const [shippingRates, setShippingRates] = useState<ShippingRate[]>([]); 
   const [orderPlaced, setOrderPlaced] = useState(false);
   const [shipmentAmount, setShipmentAmount] = useState<number  | null>(null);  
+  const [trackingNumber, setTrackingNumber] = useState<string  | null>(null);  
   const { user } = useUser();
   const cartItemCount = cartCount ?? 0;
-  const { toast } = useToast();
   const totalPricewithTax = (totalPrice ?? 0) * 0.1 + (totalPrice ?? 0);
   const [selectedRate, setSelectedRate] = useState<ShippingRate | null>(null);    
   const [loading, setLoading] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false); 
   const [paymentMethod, setPaymentMethod] = useState("COD"); 
   const [totalWithShipping, setTotalWithShipping] = useState(totalPricewithTax);
-
+  const router = useRouter();
 
   const [billingData, setBillingData] = useState({
     firstName: '',
@@ -100,9 +102,8 @@ export default function Checkout() {
 
   const getShippingRates = async () => {
     if (!billingData.firstName || !billingData.lastName || !billingData.streetAddress || !billingData.city || !billingData.zipcode || !billingData.phone || !billingData.email) {
-      toast({
-        variant: 'destructive',
-        title: `Something is Missing`,  
+      toast(
+        `Something is Missing`, { 
         description: "Please Fill out the complete form 😊",
         duration: 3000, 
       });
@@ -111,9 +112,7 @@ export default function Checkout() {
   
     const cartItems = Object.values(cartDetails ?? {});
     if (cartItems.length === 0) {
-      toast({
-        variant: 'destructive',
-        title: 'Cart is Empty',
+      toast('Cart is Empty',{
         description: 'Your cart is empty. Add some items to place an order.',
         action: (
           <div className="flex items-center">
@@ -123,7 +122,7 @@ export default function Checkout() {
           </div>
         ),
         duration: 3000,
-      });
+    });
       return;
     }
   
@@ -157,18 +156,14 @@ export default function Checkout() {
    if (shippingResult.rates.rate_response && shippingResult.rates.rate_response.rates) {
       setShippingRates(shippingResult.rates.rate_response.rates); 
     } else {
-      toast({
-        variant: 'destructive',
-        title: 'Error Fetching Rates',
+      toast('Error Fetching Rates',{
         description: 'There was an issue fetching the shipping rates. Please try again later.',
         duration: 3000,
       });
     }
 
     if (!shippingResponse.ok || !shippingResult.rates || shippingResult.rates.length === 0) {
-      toast({
-        variant: 'destructive',
-        title: 'Shipping Rates Fetch Failed',
+      toast('Shipping Rates Fetch Failed',{
         description: 'We could not fetch available shipping rates. Please try again later.',
         duration: 3000,
       });
@@ -181,9 +176,7 @@ export default function Checkout() {
 
   const handleGenerateLabel = async () => {
     if (!selectedRate) {
-      toast({
-        variant: 'destructive',
-        title: 'No Shipping Option Selected',
+      toast('No Shipping Option Selected',{
         description: 'Please select a shipping option to proceed.',
         duration: 3000,
       });
@@ -208,29 +201,26 @@ export default function Checkout() {
       // console.log(result);
   
       setShipmentAmount(result.label.shipment_cost.amount);
+      setTrackingNumber(result.label.tracking_number);
   
       setIsDialogOpen(true);
       if (result.success) {
-        const calculatedTotalWithShipping = totalPricewithTax + (result.label.shipment_cost.amount || 0); // Handle potential null
+        const calculatedTotalWithShipping = totalPricewithTax + (result.label.shipment_cost.amount || 0); 
       setTotalWithShipping(calculatedTotalWithShipping);
 
-        toast({
-          title: "Shipping Label Generated!",
+        toast(
+          "Shipping Label Generated!",{
           description: "Your shipping label has been created successfully.",
           duration: 3000,
         });
       } else {
-        toast({
-          variant: "destructive",
-          title: "Error Generating Label",
+        toast("Error Generating Label",{
           description: result.message,
           duration: 3000,
         });
       }
     } catch (error) {
-      toast({
-        variant: "destructive",
-        title: "Network Error",
+      toast("Network Error",{
         description: "Something went wrong. Please try again later.",
         duration: 3000,
       });
@@ -243,9 +233,7 @@ export default function Checkout() {
 
   const handlePlaceOrder = async () => {
     if (!billingData.firstName || !billingData.lastName || !billingData.streetAddress || !billingData.city || !billingData.zipcode || !billingData.phone || !billingData.email) {
-      toast({
-        variant: 'destructive',
-        title: `Something is Missing`,  
+      toast(`Something is Missing`,{  
         description: "Please Fill out the complete form 😊",
         duration: 3000, 
       });
@@ -254,9 +242,7 @@ export default function Checkout() {
   
     const cartItems = Object.values(cartDetails ?? {});
     if (cartItems.length === 0) {
-      toast({
-        variant: 'destructive',
-        title: 'Cart is Empty',
+      toast('Cart is Empty',{
         description: 'Your cart is empty. Add some items to place an order.',
         action: (
           <div className="flex items-center">
@@ -278,6 +264,9 @@ export default function Checkout() {
         _ref: item.id,
       },
       quantity: item.quantity,
+      name: item.name,
+      price: item.price,
+      image: item.image,
     }));
   
     const orderData = {
@@ -298,21 +287,20 @@ export default function Checkout() {
     });
   
     const result = await response.json();
-    if (result.order) {
-      clearCart();
-      toast({
-        title: 'Order Placed Successfully!',
-        description: 'Thank you for your order. You will receive a confirmation email shortly.',
-        duration: 3000,
-      });
-    } else {
-      toast({
-        variant: 'destructive',
-        title: 'Failed to Place Order',
-        description: 'There was an issue placing your order. Please try again later.',
-        duration: 3000,
-      });
-    }
+  if (result.order) {
+    clearCart();
+    toast('Order Placed Successfully!',{
+      description: 'Thank you for your order. You will receive a confirmation email shortly.',
+      duration: 3000,
+    });
+
+    router.push(`/thank-you?orderId=${result.order._id}&shipmentCost=${shipmentAmount}&paymentMethod=${paymentMethod}&totalAmount=${totalWithShipping}&trackingNumber=${trackingNumber}&cartItems=${encodeURIComponent(JSON.stringify(preparedCartItems))}`);
+  } else {
+    toast('Failed to Place Order',{
+      description: 'There was an issue placing your order. Please try again later.',
+      duration: 3000,
+    });
+  }
 
     setOrderPlaced(true);
 
@@ -320,9 +308,7 @@ export default function Checkout() {
 
   const handleStripePayment = async () => {
     if (!cartDetails || Object.keys(cartDetails).length === 0) {
-      toast({
-        variant: "destructive",
-        title: "Cart is Empty",
+      toast("Cart is Empty",{
         description: "Add items to your cart before proceeding.",
         duration: 3000,
       });
@@ -354,9 +340,7 @@ export default function Checkout() {
     // Handle the response from the API
     if (!response.ok) {
       console.error("Error in API request:", response.statusText);
-      toast({
-        variant: "destructive",
-        title: "Payment Error",
+      toast("Payment Error",{
         description: "Failed to initiate payment. Please try again.",
         duration: 3000,
       });
@@ -367,9 +351,7 @@ export default function Checkout() {
     if (data.url) {
       window.location.href = data.url; // Redirect to Stripe Checkout page
     } else {
-      toast({
-        variant: "destructive",
-        title: "Payment Error",
+      toast("Payment Error",{
         description: "No URL received for payment. Please try again.",
         duration: 3000,
       });

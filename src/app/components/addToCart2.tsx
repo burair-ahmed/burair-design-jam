@@ -1,6 +1,7 @@
 "use client";
 import { useShoppingCart } from "use-shopping-cart";
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "sonner"
+
 import { ToastAction } from "@/components/ui/toast"
 import Link from "next/link";
 
@@ -25,7 +26,6 @@ export default function AddToCart2({
   id,
 }: ProductCart) {
   const { addItem, handleCartClick } = useShoppingCart();
-  const { toast } = useToast();
 
   const product = {
     currency: currency,
@@ -41,14 +41,15 @@ export default function AddToCart2({
     addItem(product); 
     handleCartClick(); 
 
-    toast({
+    toast(`${name} added to cart`,{
+        
+      description: "",
         action: (
           <div className="flex items-center">
             <img src={image} alt={name} className="w-12 h-12 mr-4" />
               <ToastAction  altText="View Cart"><Link href={"/cart"}>View Cart</Link></ToastAction>
           </div>
         ),
-        title: `${name} added to cart`,  
         duration: 3000, 
       });
     };
